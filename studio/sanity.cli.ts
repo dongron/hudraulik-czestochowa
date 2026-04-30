@@ -23,4 +23,7 @@ export default defineCliConfig({
     generates: './sanity.types.ts',
     overloadClientMethods: true,
   },
+  deployment: {
+    appId: process.env.SANITY_STUDIO_APP_ID || '', // Visit https://www.sanity.io/docs/studio/environment-variables to learn more about using environment variables for local & production.
+  },
 })
