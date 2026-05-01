@@ -15,6 +15,69 @@
 export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: ../sanity.schema.json
+export type ContactSection = {
+  _type: 'contactSection'
+  heading: string
+  subheading?: string
+  formEnabled?: boolean
+}
+
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+}
+
+export type AboutSection = {
+  _type: 'aboutSection'
+  heading: string
+  body: BlockContentTextOnly
+  photo?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  photoAlt?: string
+}
+
+export type TestimonialsSection = {
+  _type: 'testimonialsSection'
+  heading: string
+  subheading?: string
+  yearsExperience: number
+  testimonials: Array<{
+    authorName: string
+    text: string
+    rating: number
+    _type: 'testimonialItem'
+    _key: string
+  }>
+}
+
+export type ServicesSection = {
+  _type: 'servicesSection'
+  heading: string
+  subheading?: string
+  services: Array<{
+    name: string
+    category: 'naprawy' | 'montaze' | 'czyszczenie'
+    description?: string
+    _type: 'serviceItem'
+    _key: string
+  }>
+}
+
+export type HeroSection = {
+  _type: 'heroSection'
+  eyebrow?: string
+  heading: string
+  subheading?: string
+  ctaLabel: string
+}
+
 export type PageReference = {
   _ref: string
   _type: 'reference'
@@ -36,13 +99,6 @@ export type Link = {
   page?: PageReference
   post?: PostReference
   openInNewTab?: boolean
-}
-
-export type SanityImageAssetReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
 }
 
 export type CallToAction = {
@@ -156,6 +212,14 @@ export type Settings = {
     _type: 'block'
     _key: string
   }>
+  phone: string
+  address: {
+    street: string
+    city: string
+    postalCode: string
+  }
+  googleMapsUrl: string
+  emergencyAvailable: boolean
   ogImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -200,6 +264,21 @@ export type Page = {
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & HeroSection)
+    | ({
+        _key: string
+      } & ServicesSection)
+    | ({
+        _key: string
+      } & TestimonialsSection)
+    | ({
+        _key: string
+      } & AboutSection)
+    | ({
+        _key: string
+      } & ContactSection)
   >
 }
 
@@ -491,10 +570,15 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | ContactSection
+  | SanityImageAssetReference
+  | AboutSection
+  | TestimonialsSection
+  | ServicesSection
+  | HeroSection
   | PageReference
   | PostReference
   | Link
-  | SanityImageAssetReference
   | CallToAction
   | InfoSection
   | BlockContentTextOnly

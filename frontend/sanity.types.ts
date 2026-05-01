@@ -15,6 +15,69 @@
 export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: ../sanity.schema.json
+export type ContactSection = {
+  _type: 'contactSection'
+  heading: string
+  subheading?: string
+  formEnabled?: boolean
+}
+
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+}
+
+export type AboutSection = {
+  _type: 'aboutSection'
+  heading: string
+  body: BlockContentTextOnly
+  photo?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  photoAlt?: string
+}
+
+export type TestimonialsSection = {
+  _type: 'testimonialsSection'
+  heading: string
+  subheading?: string
+  yearsExperience: number
+  testimonials: Array<{
+    authorName: string
+    text: string
+    rating: number
+    _type: 'testimonialItem'
+    _key: string
+  }>
+}
+
+export type ServicesSection = {
+  _type: 'servicesSection'
+  heading: string
+  subheading?: string
+  services: Array<{
+    name: string
+    category: 'naprawy' | 'montaze' | 'czyszczenie'
+    description?: string
+    _type: 'serviceItem'
+    _key: string
+  }>
+}
+
+export type HeroSection = {
+  _type: 'heroSection'
+  eyebrow?: string
+  heading: string
+  subheading?: string
+  ctaLabel: string
+}
+
 export type PageReference = {
   _ref: string
   _type: 'reference'
@@ -36,13 +99,6 @@ export type Link = {
   page?: PageReference
   post?: PostReference
   openInNewTab?: boolean
-}
-
-export type SanityImageAssetReference = {
-  _ref: string
-  _type: 'reference'
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
 }
 
 export type CallToAction = {
@@ -156,6 +212,14 @@ export type Settings = {
     _type: 'block'
     _key: string
   }>
+  phone: string
+  address: {
+    street: string
+    city: string
+    postalCode: string
+  }
+  googleMapsUrl: string
+  emergencyAvailable: boolean
   ogImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -200,6 +264,21 @@ export type Page = {
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & HeroSection)
+    | ({
+        _key: string
+      } & ServicesSection)
+    | ({
+        _key: string
+      } & TestimonialsSection)
+    | ({
+        _key: string
+      } & AboutSection)
+    | ({
+        _key: string
+      } & ContactSection)
   >
 }
 
@@ -491,10 +570,15 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | ContactSection
+  | SanityImageAssetReference
+  | AboutSection
+  | TestimonialsSection
+  | ServicesSection
+  | HeroSection
   | PageReference
   | PostReference
   | Link
-  | SanityImageAssetReference
   | CallToAction
   | InfoSection
   | BlockContentTextOnly
@@ -562,6 +646,14 @@ export type SettingsQueryResult = {
     _type: 'block'
     _key: string
   }>
+  phone: string
+  address: {
+    street: string
+    city: string
+    postalCode: string
+  }
+  googleMapsUrl: string
+  emergencyAvailable: boolean
   ogImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -584,6 +676,20 @@ export type GetPageQueryResult = {
   heading: string
   subheading: string | null
   pageBuilder: Array<
+    | {
+        _key: string
+        _type: 'aboutSection'
+        heading: string
+        body: BlockContentTextOnly
+        photo?: {
+          asset?: SanityImageAssetReference
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+        }
+        photoAlt?: string
+      }
     | {
         _key: string
         _type: 'callToAction'
@@ -611,6 +717,21 @@ export type GetPageQueryResult = {
         }
         theme?: 'dark' | 'light'
         contentAlignment?: 'imageFirst' | 'textFirst'
+      }
+    | {
+        _key: string
+        _type: 'contactSection'
+        heading: string
+        subheading?: string
+        formEnabled?: boolean
+      }
+    | {
+        _key: string
+        _type: 'heroSection'
+        eyebrow?: string
+        heading: string
+        subheading?: string
+        ctaLabel: string
       }
     | {
         _key: string
@@ -650,6 +771,143 @@ export type GetPageQueryResult = {
               markDefs: null
             }
         > | null
+      }
+    | {
+        _key: string
+        _type: 'servicesSection'
+        heading: string
+        subheading?: string
+        services: Array<{
+          name: string
+          category: 'czyszczenie' | 'montaze' | 'naprawy'
+          description?: string
+          _type: 'serviceItem'
+          _key: string
+        }>
+      }
+    | {
+        _key: string
+        _type: 'testimonialsSection'
+        heading: string
+        subheading?: string
+        yearsExperience: number
+        testimonials: Array<{
+          authorName: string
+          text: string
+          rating: number
+          _type: 'testimonialItem'
+          _key: string
+        }>
+      }
+  > | null
+} | null
+
+// Source: sanity/lib/queries.ts
+// Variable: landingPageQuery
+// Query: *[_type == "page" && slug.current == "home"][0]{    _id,    _type,    name,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "heroSection" => {        _key,        _type,        eyebrow,        heading,        subheading,        ctaLabel,      },      _type == "servicesSection" => {        _key,        _type,        heading,        subheading,        "services": services[]{          _key,          name,          category,          description,        },      },      _type == "testimonialsSection" => {        _key,        _type,        heading,        subheading,        yearsExperience,        "testimonials": testimonials[]{          _key,          authorName,          text,          rating,        },      },      _type == "aboutSection" => {        _key,        _type,        heading,        body,        "photo": photo{ asset->, hotspot, crop },        photoAlt,      },      _type == "contactSection" => {        _key,        _type,        heading,        subheading,        formEnabled,      },    },  }
+export type LandingPageQueryResult = {
+  _id: string
+  _type: 'page'
+  name: string
+  heading: string
+  subheading: string | null
+  pageBuilder: Array<
+    | {
+        _key: string
+        _type: 'aboutSection'
+        heading: string
+        body: BlockContentTextOnly
+        photo: {
+          asset: {
+            _id: string
+            _type: 'sanity.imageAsset'
+            _createdAt: string
+            _updatedAt: string
+            _rev: string
+            originalFilename?: string
+            label?: string
+            title?: string
+            description?: string
+            altText?: string
+            sha1hash: string
+            extension: string
+            mimeType: string
+            size: number
+            assetId: string
+            uploadId?: string
+            path: string
+            url: string
+            metadata?: SanityImageMetadata
+            source?: SanityAssetSourceData
+          } | null
+          hotspot: SanityImageHotspot | null
+          crop: SanityImageCrop | null
+        } | null
+        photoAlt: string | null
+      }
+    | {
+        _key: string
+        _type: 'callToAction'
+        eyebrow?: string
+        heading: string
+        body?: BlockContentTextOnly
+        button?: Button
+        image?: {
+          asset?: SanityImageAssetReference
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+        }
+        theme?: 'dark' | 'light'
+        contentAlignment?: 'imageFirst' | 'textFirst'
+      }
+    | {
+        _key: string
+        _type: 'contactSection'
+        heading: string
+        subheading: string | null
+        formEnabled: boolean | null
+      }
+    | {
+        _key: string
+        _type: 'heroSection'
+        eyebrow: string | null
+        heading: string
+        subheading: string | null
+        ctaLabel: string
+      }
+    | {
+        _key: string
+        _type: 'infoSection'
+        heading?: string
+        subheading?: string
+        content?: BlockContent
+      }
+    | {
+        _key: string
+        _type: 'servicesSection'
+        heading: string
+        subheading: string | null
+        services: Array<{
+          _key: string
+          name: string
+          category: 'czyszczenie' | 'montaze' | 'naprawy'
+          description: string | null
+        }>
+      }
+    | {
+        _key: string
+        _type: 'testimonialsSection'
+        heading: string
+        subheading: string | null
+        yearsExperience: number
+        testimonials: Array<{
+          _key: string
+          authorName: string
+          text: string
+          rating: number
+        }>
       }
   > | null
 } | null
@@ -819,6 +1077,7 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "settings"][0]': SettingsQueryResult
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
+    '\n  *[_type == "page" && slug.current == "home"][0]{\n    _id,\n    _type,\n    name,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "heroSection" => {\n        _key,\n        _type,\n        eyebrow,\n        heading,\n        subheading,\n        ctaLabel,\n      },\n      _type == "servicesSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        "services": services[]{\n          _key,\n          name,\n          category,\n          description,\n        },\n      },\n      _type == "testimonialsSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        yearsExperience,\n        "testimonials": testimonials[]{\n          _key,\n          authorName,\n          text,\n          rating,\n        },\n      },\n      _type == "aboutSection" => {\n        _key,\n        _type,\n        heading,\n        body,\n        "photo": photo{ asset->, hotspot, crop },\n        photoAlt,\n      },\n      _type == "contactSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        formEnabled,\n      },\n    },\n  }\n': LandingPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult

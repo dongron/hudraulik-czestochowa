@@ -57,6 +57,67 @@ export const getPageQuery = defineQuery(`
   }
 `)
 
+export const landingPageQuery = defineQuery(`
+  *[_type == "page" && slug.current == "home"][0]{
+    _id,
+    _type,
+    name,
+    heading,
+    subheading,
+    "pageBuilder": pageBuilder[]{
+      ...,
+      _type == "heroSection" => {
+        _key,
+        _type,
+        eyebrow,
+        heading,
+        subheading,
+        ctaLabel,
+      },
+      _type == "servicesSection" => {
+        _key,
+        _type,
+        heading,
+        subheading,
+        "services": services[]{
+          _key,
+          name,
+          category,
+          description,
+        },
+      },
+      _type == "testimonialsSection" => {
+        _key,
+        _type,
+        heading,
+        subheading,
+        yearsExperience,
+        "testimonials": testimonials[]{
+          _key,
+          authorName,
+          text,
+          rating,
+        },
+      },
+      _type == "aboutSection" => {
+        _key,
+        _type,
+        heading,
+        body,
+        "photo": photo{ asset->, hotspot, crop },
+        photoAlt,
+      },
+      _type == "contactSection" => {
+        _key,
+        _type,
+        heading,
+        subheading,
+        formEnabled,
+      },
+    },
+  }
+`)
+
 export const sitemapData = defineQuery(`
   *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {
     "slug": slug.current,

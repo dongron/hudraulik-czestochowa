@@ -17,7 +17,7 @@
 
 **Purpose**: Verify the starter kit runs correctly before any new code is written.
 
-- [ ] T001 Verify dev environment: run `pnpm run dev` from project root, confirm frontend on :3000 and Studio on :3333 both start without errors
+- [X] T001 Verify dev environment: run `pnpm run dev` from project root, confirm frontend on :3000 and Studio on :3333 both start without errors
 
 **Checkpoint**: Starter kit is green — safe to modify files.
 
@@ -29,17 +29,17 @@
 
 **⚠️ CRITICAL**: This phase blocks all user story phases. Complete fully before moving to Phase 3.
 
-- [ ] T002 [P] Create heroSection Sanity schema in `studio/src/schemaTypes/objects/heroSection.ts` — fields: eyebrow (string, optional), heading (string, required), subheading (string, optional), ctaLabel (string, required)
-- [ ] T003 [P] Create servicesSection Sanity schema in `studio/src/schemaTypes/objects/servicesSection.ts` — fields: heading (string, required), subheading (string, optional), services array with inline serviceItem objects (name: string required, category: string enum `naprawy|montaze|czyszczenie` required, description: string optional)
-- [ ] T004 [P] Create testimonialsSection Sanity schema in `studio/src/schemaTypes/objects/testimonialsSection.ts` — fields: heading (string, required), subheading (string, optional), yearsExperience (number, required), testimonials array with inline testimonialItem objects (authorName: string required, text: string required, rating: number required)
-- [ ] T005 [P] Create aboutSection Sanity schema in `studio/src/schemaTypes/objects/aboutSection.ts` — fields: heading (string, required), body (blockContentTextOnly, required), photo (image with hotspot: true, optional), photoAlt (string, optional)
-- [ ] T006 [P] Create contactSection Sanity schema in `studio/src/schemaTypes/objects/contactSection.ts` — fields: heading (string, required), subheading (string, optional), formEnabled (boolean, default: true)
-- [ ] T007 [P] Extend settings singleton in `studio/src/schemaTypes/singletons/settings.tsx` — add fields: phone (string, required), address (object with street/city/postalCode strings, required), googleMapsUrl (url, required), emergencyAvailable (boolean, required)
-- [ ] T008 Register all 5 new schema objects (heroSection, servicesSection, testimonialsSection, aboutSection, contactSection) in `studio/src/schemaTypes/index.ts`
-- [ ] T009 Register all 5 new block types in the `pageBuilder` array in `studio/src/schemaTypes/documents/page.ts` alongside existing callToAction and infoSection types
-- [ ] T010 Run `pnpm run sanity:typegen` inside `frontend/` to regenerate `frontend/sanity.types.ts` with all new types
-- [ ] T011 Add `landingPageQuery` constant to `frontend/sanity/lib/queries.ts` per the GROQ contract in `contracts/groq-queries.md` (fetches `page` where `slug.current == "home"` with all pageBuilder blocks projected)
-- [ ] T012 Replace `frontend/app/page.tsx` with a landing page shell: fetch `landingPageQuery` + `settingsQuery` as RSC, pass results to a block-switch renderer that stubs unimplemented block types
+- [X] T002 [P] Create heroSection Sanity schema in `studio/src/schemaTypes/objects/heroSection.ts` — fields: eyebrow (string, optional), heading (string, required), subheading (string, optional), ctaLabel (string, required)
+- [X] T003 [P] Create servicesSection Sanity schema in `studio/src/schemaTypes/objects/servicesSection.ts` — fields: heading (string, required), subheading (string, optional), services array with inline serviceItem objects (name: string required, category: string enum `naprawy|montaze|czyszczenie` required, description: string optional)
+- [X] T004 [P] Create testimonialsSection Sanity schema in `studio/src/schemaTypes/objects/testimonialsSection.ts` — fields: heading (string, required), subheading (string, optional), yearsExperience (number, required), testimonials array with inline testimonialItem objects (authorName: string required, text: string required, rating: number required)
+- [X] T005 [P] Create aboutSection Sanity schema in `studio/src/schemaTypes/objects/aboutSection.ts` — fields: heading (string, required), body (blockContentTextOnly, required), photo (image with hotspot: true, optional), photoAlt (string, optional)
+- [X] T006 [P] Create contactSection Sanity schema in `studio/src/schemaTypes/objects/contactSection.ts` — fields: heading (string, required), subheading (string, optional), formEnabled (boolean, default: true)
+- [X] T007 [P] Extend settings singleton in `studio/src/schemaTypes/singletons/settings.tsx` — add fields: phone (string, required), address (object with street/city/postalCode strings, required), googleMapsUrl (url, required), emergencyAvailable (boolean, required)
+- [X] T008 Register all 5 new schema objects (heroSection, servicesSection, testimonialsSection, aboutSection, contactSection) in `studio/src/schemaTypes/index.ts`
+- [X] T009 Register all 5 new block types in the `pageBuilder` array in `studio/src/schemaTypes/documents/page.ts` alongside existing callToAction and infoSection types
+- [X] T010 Run `pnpm run sanity:typegen` inside `frontend/` to regenerate `frontend/sanity.types.ts` with all new types
+- [X] T011 Add `landingPageQuery` constant to `frontend/sanity/lib/queries.ts` per the GROQ contract in `contracts/groq-queries.md` (fetches `page` where `slug.current == "home"` with all pageBuilder blocks projected)
+- [X] T012 Replace `frontend/app/page.tsx` with a landing page shell: fetch `landingPageQuery` + `settingsQuery` as RSC, pass results to a block-switch renderer that stubs unimplemented block types
 
 **Checkpoint**: Studio schema is deployed, types are generated, page.tsx fetches data — ready for component phases.
 
@@ -51,11 +51,11 @@
 
 **Independent Test**: Navigate to `http://localhost:3000`. The sticky nav shows "Usługi Hydrauliczne" and a tappable "Zadzwoń" button. The hero section shows the company name, a headline about plumbing in Częstochowa, and a "Zadzwoń teraz" `tel:+48518893308` link. The footer shows the phone number and address. Tapping the phone link on mobile opens the dialler.
 
-- [ ] T013 [P] [US1] Create `frontend/app/components/landing/LandingNav.tsx` — sticky RSC nav (`sticky top-0 z-50`): left side company name text, right side anchor links to `#uslugi`, `#o-nas`, `#kontakt`, and a "Zadzwoń" button as `<a href="tel:+48518893308">` styled as primary CTA; accepts `phone: string` prop from settings
-- [ ] T014 [P] [US1] Create `frontend/app/components/landing/LandingHero.tsx` — RSC hero section: company name as `<h1>`, headline and subheading, primary "Zadzwoń teraz" `<a href="tel:+48518893308">` button, mobile-first layout with full-viewport height; accepts `HeroSectionBlock` + `phone: string` props
-- [ ] T015 [P] [US1] Create `frontend/app/components/landing/LandingFooter.tsx` — RSC footer: phone as `<a href="tel:+48518893308">` link, full address (Tadeusza Gajcego 4, 42-216 Częstochowa), Google Maps `<a href="https://share.google/iTFr7fdAX5pKqkf48" target="_blank" rel="noopener noreferrer">` link; accepts `settings` prop
-- [ ] T016 [US1] Wire LandingNav, LandingHero, LandingFooter into `frontend/app/page.tsx` — render nav above the block-switch area and footer below; pass `settings.phone` and the `heroSection` block as typed props
-- [ ] T017 [US1] Seed Sanity Studio with US1 content: create settings document (phone: "+48518893308", address, googleMapsUrl, emergencyAvailable: true); create "home" page document with a heroSection block (heading: "Hydraulik Częstochowa — szybko i solidnie", ctaLabel: "Zadzwoń teraz")
+- [X] T013 [P] [US1] Create `frontend/app/components/landing/LandingNav.tsx` — sticky RSC nav (`sticky top-0 z-50`): left side company name text, right side anchor links to `#uslugi`, `#o-nas`, `#kontakt`, and a "Zadzwoń" button as `<a href="tel:+48518893308">` styled as primary CTA; accepts `phone: string` prop from settings
+- [X] T014 [P] [US1] Create `frontend/app/components/landing/LandingHero.tsx` — RSC hero section: company name as `<h1>`, headline and subheading, primary "Zadzwoń teraz" `<a href="tel:+48518893308">` button, mobile-first layout with full-viewport height; accepts `HeroSectionBlock` + `phone: string` props
+- [X] T015 [P] [US1] Create `frontend/app/components/landing/LandingFooter.tsx` — RSC footer: phone as `<a href="tel:+48518893308">` link, full address (Tadeusza Gajcego 4, 42-216 Częstochowa), Google Maps `<a href="https://share.google/iTFr7fdAX5pKqkf48" target="_blank" rel="noopener noreferrer">` link; accepts `settings` prop
+- [X] T016 [US1] Wire LandingNav, LandingHero, LandingFooter into `frontend/app/page.tsx` — render nav above the block-switch area and footer below; pass `settings.phone` and the `heroSection` block as typed props
+- [X] T017 [US1] Seed Sanity Studio with US1 content: create settings document (phone: "+48518893308", address, googleMapsUrl, emergencyAvailable: true); create "home" page document with a heroSection block (heading: "Hydraulik Częstochowa — szybko i solidnie", ctaLabel: "Zadzwoń teraz")
 
 **Checkpoint**: US1 independently testable — phone number is visible and tappable in the hero and nav without any further work.
 
@@ -67,8 +67,8 @@
 
 **Independent Test**: Open `http://localhost:3000`. Without scrolling, a badge or banner communicating "Pogotowie hydrauliczne — noce i weekendy" (or similar) is visible inside or immediately below the hero. The browser tab title and search snippet contain "awaria" or "24/7" language.
 
-- [ ] T018 [US2] Add emergency badge to `frontend/app/components/landing/LandingHero.tsx` (depends on T014) — render a visually distinct badge (e.g., "🔧 Pogotowie hydrauliczne – noce i weekendy") conditionally when `emergencyAvailable === true` prop is passed; badge must be visible above the fold without scrolling on both mobile and desktop
-- [ ] T019 [US2] Add `generateMetadata` export to `frontend/app/page.tsx` — Polish title: "Hydraulik Częstochowa | Usługi Hydrauliczne – Pogotowie 24/7", Polish description mentioning emergency availability and Częstochowa, OpenGraph title + description, canonical URL
+- [X] T018 [US2] Add emergency badge to `frontend/app/components/landing/LandingHero.tsx` (depends on T014) — render a visually distinct badge (e.g., "🔧 Pogotowie hydrauliczne – noce i weekendy") conditionally when `emergencyAvailable === true` prop is passed; badge must be visible above the fold without scrolling on both mobile and desktop
+- [X] T019 [US2] Add `generateMetadata` export to `frontend/app/page.tsx` — Polish title: "Hydraulik Częstochowa | Usługi Hydrauliczne – Pogotowie 24/7", Polish description mentioning emergency availability and Częstochowa, OpenGraph title + description, canonical URL
 
 **Checkpoint**: US2 independently testable — emergency badge visible above fold; `<meta name="description">` contains emergency keywords.
 
@@ -80,9 +80,9 @@
 
 **Independent Test**: Scroll down from the hero. Within two scroll actions, a "Nasze usługi" section is visible with three H3 headings: "Naprawy" (8 items), "Montaże" (7 items), "Czyszczenie" (2 items). All 17 service names are rendered as plain HTML text (not images). A call CTA is visible near the services section.
 
-- [ ] T020 [P] [US3] Create `frontend/app/components/landing/LandingServices.tsx` — RSC services section with `id="uslugi"`: render section heading as `<h2>`, group services by `category` field, render each group's label (Naprawy / Montaże / Czyszczenie) as `<h3>`, render each service name as plain HTML text in a responsive grid; accepts `ServicesSectionBlock` prop; include a "Zadzwoń teraz" `<a href="tel:+48518893308">` CTA at the section bottom
-- [ ] T021 [US3] Register LandingServices in the block-switch in `frontend/app/page.tsx` for `_type === 'servicesSection'` blocks (depends on T020, T016)
-- [ ] T022 [US3] Seed Sanity Studio: add a servicesSection block to the "home" page with all 17 services (8 naprawy, 7 montaze, 2 czyszczenie) per the seed data in `data-model.md`; set section heading to "Nasze usługi"
+- [X] T020 [P] [US3] Create `frontend/app/components/landing/LandingServices.tsx` — RSC services section with `id="uslugi"`: render section heading as `<h2>`, group services by `category` field, render each group's label (Naprawy / Montaże / Czyszczenie) as `<h3>`, render each service name as plain HTML text in a responsive grid; accepts `ServicesSectionBlock` prop; include a "Zadzwoń teraz" `<a href="tel:+48518893308">` CTA at the section bottom
+- [X] T021 [US3] Register LandingServices in the block-switch in `frontend/app/page.tsx` for `_type === 'servicesSection'` blocks (depends on T020, T016)
+- [X] T022 [US3] Seed Sanity Studio: add a servicesSection block to the "home" page with all 17 services (8 naprawy, 7 montaze, 2 czyszczenie) per the seed data in `data-model.md`; set section heading to "Nasze usługi"
 
 **Checkpoint**: US3 independently testable — all 17 services visible as HTML text, grouped under H3 headings, within two scroll actions.
 
@@ -94,11 +94,11 @@
 
 **Independent Test**: Scroll to the bottom of the page. Find: (a) an "O nas" section with 2-3 sentences mentioning 10 years of experience and a photo placeholder; (b) a testimonials section with 3 Polish reviews and a "10 lat doświadczenia" badge; (c) a contact section with the address "Tadeusza Gajcego 4, 42-216 Częstochowa" and a Google Maps link opening in a new tab.
 
-- [ ] T023 [P] [US4] Create `frontend/app/components/landing/LandingTestimonials.tsx` — RSC testimonials section: render `<h2>` heading, "10 lat doświadczenia" trust badge using `yearsExperience` prop, render each testimonial as a card with `authorName`, `text`, star `rating` (render as ★ characters); accepts `TestimonialsSectionBlock` prop
-- [ ] T024 [P] [US4] Create `frontend/app/components/landing/LandingAbout.tsx` — RSC about section with `id="o-nas"`: render `<h2>` heading, `body` via `@portabletext/react`, photo slot using `next/image` with `loading="lazy"` (below-fold image; do NOT use `priority`; show a grey placeholder div when `photo` is null); accepts `AboutSectionBlock` prop
-- [ ] T025 [P] [US4] Create `frontend/app/components/landing/LandingContact.tsx` — `'use client'` component with `id="kontakt"`: render `<h2>` heading, display address and Google Maps `<a>` link, contact form with fields (name, phone, message); manage `useState<'idle' | 'loading' | 'success' | 'error'>` — on submit mock-resolve to `'success'` after a 800ms delay; render success state ("Dziękujemy! Oddzwonimy wkrótce.") and error state UI ("Coś poszło nie tak. Spróbuj ponownie." — triggered by reading `window.location.search` for `?showError=1`, safe in `'use client'` without requiring `useSearchParams()`); accepts `ContactSectionBlock` + `settings` props
-- [ ] T026 [US4] Register LandingTestimonials, LandingAbout, LandingContact in the block-switch in `frontend/app/page.tsx` for their respective `_type` values (depends on T023, T024, T025, T016); wrap `<LandingContact>` in `<Suspense fallback={null}>` to preserve static generation (Constitution IV)
-- [ ] T027 [US4] Seed Sanity Studio: add testimonialsSection block (3 mock testimonials per data-model.md: Marek Kowalski, Anna Wiśniewska, Tomasz Nowak; yearsExperience: 10), aboutSection block (Polish company description referencing 10 years + Częstochowa), and contactSection block (heading: "Skontaktuj się z nami", subheading: "Wycenimy Twoją pracę bezpłatnie") to the "home" page
+- [X] T023 [P] [US4] Create `frontend/app/components/landing/LandingTestimonials.tsx` — RSC testimonials section: render `<h2>` heading, "10 lat doświadczenia" trust badge using `yearsExperience` prop, render each testimonial as a card with `authorName`, `text`, star `rating` (render as ★ characters); accepts `TestimonialsSectionBlock` prop
+- [X] T024 [P] [US4] Create `frontend/app/components/landing/LandingAbout.tsx` — RSC about section with `id="o-nas"`: render `<h2>` heading, `body` via `@portabletext/react`, photo slot using `next/image` with `loading="lazy"` (below-fold image; do NOT use `priority`; show a grey placeholder div when `photo` is null); accepts `AboutSectionBlock` prop
+- [X] T025 [P] [US4] Create `frontend/app/components/landing/LandingContact.tsx` — `'use client'` component with `id="kontakt"`: render `<h2>` heading, display address and Google Maps `<a>` link, contact form with fields (name, phone, message); manage `useState<'idle' | 'loading' | 'success' | 'error'>` — on submit mock-resolve to `'success'` after a 800ms delay; render success state ("Dziękujemy! Oddzwonimy wkrótce.") and error state UI ("Coś poszło nie tak. Spróbuj ponownie." — triggered by reading `window.location.search` for `?showError=1`, safe in `'use client'` without requiring `useSearchParams()`); accepts `ContactSectionBlock` + `settings` props
+- [X] T026 [US4] Register LandingTestimonials, LandingAbout, LandingContact in the block-switch in `frontend/app/page.tsx` for their respective `_type` values (depends on T023, T024, T025, T016); wrap `<LandingContact>` in `<Suspense fallback={null}>` to preserve static generation (Constitution IV)
+- [X] T027 [US4] Seed Sanity Studio: add testimonialsSection block (3 mock testimonials per data-model.md: Marek Kowalski, Anna Wiśniewska, Tomasz Nowak; yearsExperience: 10), aboutSection block (Polish company description referencing 10 years + Częstochowa), and contactSection block (heading: "Skontaktuj się z nami", subheading: "Wycenimy Twoją pracę bezpłatnie") to the "home" page
 
 **Checkpoint**: US4 independently testable — address visible, Google Maps link opens correctly, testimonials displayed, contact form shows success on submit.
 
@@ -108,11 +108,11 @@
 
 **Purpose**: SEO structured data, section IDs for nav anchors, accessibility, build validation.
 
-- [ ] T028 [P] Create `frontend/app/components/LocalBusinessSchema.tsx` — RSC component that renders a `<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({...}) }} />` tag with `@type: "Plumber"` LocalBusiness schema using settings data (name, phone, address, url); accepts `settings` prop
-- [ ] T029 Inject `<LocalBusinessSchema settings={settings} />` inside `<head>` in `frontend/app/layout.tsx` (depends on T028); pass settings fetched server-side
-- [ ] T030 [P] Verify all landing section components have the correct anchor `id` attributes — LandingServices: `id="uslugi"`, LandingAbout: `id="o-nas"`, LandingContact: `id="kontakt"` — matching the nav links in LandingNav
-- [ ] T031 [P] Mobile-first responsive pass: review all landing components on 375px viewport — ensure sticky nav doesn't overflow, hero CTA is full-width, services grid stacks to single column, contact form inputs are touch-friendly
-- [ ] T032 Run `pnpm --filter frontend build` from project root and resolve any TypeScript or build errors
+- [X] T028 [P] Create `frontend/app/components/LocalBusinessSchema.tsx` — RSC component that renders a `<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({...}) }} />` tag with `@type: "Plumber"` LocalBusiness schema using settings data (name, phone, address, url); accepts `settings` prop
+- [X] T029 Inject `<LocalBusinessSchema settings={settings} />` inside `<head>` in `frontend/app/layout.tsx` (depends on T028); pass settings fetched server-side
+- [X] T030 [P] Verify all landing section components have the correct anchor `id` attributes — LandingServices: `id="uslugi"`, LandingAbout: `id="o-nas"`, LandingContact: `id="kontakt"` — matching the nav links in LandingNav
+- [X] T031 [P] Mobile-first responsive pass: review all landing components on 375px viewport — ensure sticky nav doesn't overflow, hero CTA is full-width, services grid stacks to single column, contact form inputs are touch-friendly
+- [X] T032 Run `pnpm --filter frontend build` from project root and resolve any TypeScript or build errors
 
 **Checkpoint**: Build passes, LocalBusiness JSON-LD present in HTML source, all nav anchor links scroll to correct sections.
 

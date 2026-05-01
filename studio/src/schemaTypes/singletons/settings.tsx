@@ -116,6 +116,52 @@ export const settings = defineType({
       ],
     }),
     defineField({
+      name: 'phone',
+      title: 'Phone',
+      description: 'E.164 format, e.g. +48518893308',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'address',
+      title: 'Address',
+      type: 'object',
+      validation: (rule) => rule.required(),
+      fields: [
+        defineField({
+          name: 'street',
+          title: 'Street',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'city',
+          title: 'City',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'postalCode',
+          title: 'Postal code',
+          type: 'string',
+          validation: (rule) => rule.required(),
+        }),
+      ],
+    }),
+    defineField({
+      name: 'googleMapsUrl',
+      title: 'Google Maps URL',
+      type: 'url',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'emergencyAvailable',
+      title: 'Emergency available (nights & weekends)',
+      type: 'boolean',
+      initialValue: true,
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'ogImage',
       title: 'Open Graph Image',
       type: 'image',
