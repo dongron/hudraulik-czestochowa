@@ -50,6 +50,9 @@ importers:
       next-sanity:
         specifier: ^12.2.2
         version: 12.4.0(@emotion/is-prop-valid@1.4.0)(@sanity/client@7.22.0)(@sanity/types@5.23.0(@types/react@19.2.14))(next@16.2.4(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react-dom@19.2.5(react@19.2.5))(react-is@19.2.5)(react@19.2.5)(sanity@5.23.0(@emotion/is-prop-valid@1.4.0)(@noble/hashes@2.2.0)(@oclif/core@4.11.0)(@sanity/cli-core@1.3.1(@noble/hashes@2.2.0)(@types/node@22.19.17)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.16.9)(yaml@2.8.3))(@types/node@22.19.17)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(jiti@2.6.1)(lightningcss@1.32.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(styled-components@6.4.1(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(terser@5.16.9)(ts-toolbelt@9.6.0)(typescript@5.9.3))(styled-components@6.4.1(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(typescript@5.9.3)
+      opennextjs-cloudflare:
+        specifier: ^1.0.0
+        version: 1.0.0
       postcss:
         specifier: ^8.5.8
         version: 8.5.13
@@ -6084,6 +6087,9 @@ packages:
   open@11.0.0:
     resolution: {integrity: sha512-smsWv2LzFjP03xmvFoJ331ss6h+jixfA4UUV/Bsiyuu4YJPfN+FIQGOIiv4w9/+MoHkfkJ22UIaQWRVFRfH6Vw==}
     engines: {node: '>=20'}
+
+  opennextjs-cloudflare@1.0.0:
+    resolution: {integrity: sha512-udcoJaxZyMUp+uYt5Lumz0b+uuCsbnQP8jG7kexZltHaO9ANxfPBhrju4MzkrUPUb3ePox9nQ7Bo2e9Wbeux9g==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -14576,6 +14582,8 @@ snapshots:
       is-inside-container: 1.0.0
       powershell-utils: 0.1.0
       wsl-utils: 0.3.1
+
+  opennextjs-cloudflare@1.0.0: {}
 
   optionator@0.9.4:
     dependencies:

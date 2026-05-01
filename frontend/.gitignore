@@ -12,6 +12,7 @@
 
 # next.js
 /.next/
+/.open-next/
 /out/
 
 # sanity
@@ -34,6 +35,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# cloudflare
+.wrangler
 
 # typescript
 *.tsbuildinfo
