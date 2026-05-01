@@ -2,7 +2,7 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "prebuild": "sanity typegen generate",
+    "prebuild": "if [ \"$CI\" = \"true\" ] || [ \"$CF_PAGES\" = \"1\" ]; then echo 'skip typegen on CI'; else sanity typegen generate; fi",
     "build": "next build",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "predev": "npm run sanity:typegen",
@@ -28,7 +28,6 @@
     "postcss": "^8.5.8",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "sanity": "^5.20.0",
     "sanity-image": "^1.1.0",
     "sonner": "^2.0.7",
     "tailwindcss": "^4.2.2"
@@ -39,6 +38,7 @@
     "@types/react-dom": "19.2.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.2",
+    "sanity": "^5.23.0",
     "typescript": "5.9.3",
     "wrangler": "^4.87.0"
   }
