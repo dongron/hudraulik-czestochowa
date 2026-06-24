@@ -10,23 +10,23 @@ export default function LocalBusinessSchema({settings}: Props) {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Plumber',
-    name: settings.title || 'Usługi Hydrauliczne',
-    telephone: settings.phone,
-    address: settings.address
+    'name': settings.title || 'Usługi Hydrauliczne',
+    'telephone': settings.phone,
+    'address': settings.address
       ? {
           '@type': 'PostalAddress',
-          streetAddress: settings.address.street,
-          addressLocality: settings.address.city,
-          postalCode: settings.address.postalCode,
-          addressCountry: 'PL',
+          'streetAddress': settings.address.street,
+          'addressLocality': settings.address.city,
+          'postalCode': settings.address.postalCode,
+          'addressCountry': 'PL',
         }
       : undefined,
-    areaServed: settings.address?.city,
-    url: settings.googleMapsUrl,
-    openingHoursSpecification: settings.emergencyAvailable
+    'areaServed': settings.address?.city,
+    'url': settings.googleMapsUrl,
+    'openingHoursSpecification': settings.emergencyAvailable
       ? {
           '@type': 'OpeningHoursSpecification',
-          dayOfWeek: [
+          'dayOfWeek': [
             'Monday',
             'Tuesday',
             'Wednesday',
@@ -35,17 +35,13 @@ export default function LocalBusinessSchema({settings}: Props) {
             'Saturday',
             'Sunday',
           ],
-          opens: '00:00',
-          closes: '23:59',
+          'opens': '00:00',
+          'closes': '23:59',
         }
       : undefined,
   }
 
   return (
-    <script
-      type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{__html: JSON.stringify(data)}}
-    />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(data)}} />
   )
 }

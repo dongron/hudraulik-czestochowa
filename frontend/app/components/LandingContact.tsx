@@ -1,6 +1,7 @@
 'use client'
 
-import {Suspense, useActionState, useEffect, useState} from 'react'
+import {Suspense, useActionState} from 'react'
+import {useSearchParams} from 'next/navigation'
 
 import {submitContactForm, type ContactFormState} from '@/app/landing-actions'
 import type {LandingPageQueryResult, SettingsQueryResult} from '@/sanity.types'
@@ -17,22 +18,16 @@ type Props = {
 
 const initialState: ContactFormState = {status: 'idle', message: null}
 
+const intentMessages: Record<string, string> = {
+  naprawa: 'Dzień dobry, potrzebuję naprawy hydraulicznej. Proszę o kontakt.',
+  montaz: 'Dzień dobry, chciałbym zlecić montaż. Proszę o kontakt.',
+  czyszczenie: 'Dzień dobry, potrzebuję czyszczenia instalacji. Proszę o kontakt.',
+}
+
 function ContactFormInner({formEnabled}: {formEnabled: boolean}) {
   const [state, formAction, pending] = useActionState(submitContactForm, initialState)
-  const [presetMessage, setPresetMessage] = useState('')
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const params = new URLSearchParams(window.location.search)
-    const intent = params.get('intent')
-    if (intent === 'naprawa') {
-      setPresetMessage('Dzień dobry, potrzebuję naprawy hydraulicznej. Proszę o kontakt.')
-    } else if (intent === 'montaz') {
-      setPresetMessage('Dzień dobry, chciałbym zlecić montaż. Proszę o kontakt.')
-    } else if (intent === 'czyszczenie') {
-      setPresetMessage('Dzień dobry, potrzebuję czyszczenia instalacji. Proszę o kontakt.')
-    }
-  }, [])
+  const searchParams = useSearchParams()
+  const presetMessage = intentMessages[searchParams.get('intent') ?? ''] ?? ''
 
   if (!formEnabled) {
     return (
@@ -138,9 +133,7 @@ export default function LandingContact({block, settings}: Props) {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             {block.heading}
           </h2>
-          {block.subheading && (
-            <p className="text-lg text-gray-600">{block.subheading}</p>
-          )}
+          {block.subheading && <p className="text-lg text-gray-600">{block.subheading}</p>}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
@@ -149,9 +142,7 @@ export default function LandingContact({block, settings}: Props) {
 
             {phoneHref && (
               <div>
-                <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                  Telefon
-                </p>
+                <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Telefon</p>
                 <a
                   href={phoneHref}
                   className="text-2xl font-bold text-blue-600 hover:text-blue-700"
@@ -195,9 +186,7 @@ export default function LandingContact({block, settings}: Props) {
 
             {settings?.emergencyAvailable && (
               <div className="rounded-lg bg-red-50 border border-red-200 p-4">
-                <p className="font-semibold text-red-700">
-                  Pogotowie hydrauliczne 24/7
-                </p>
+                <p className="font-semibold text-red-700">Pogotowie hydrauliczne 24/7</p>
                 <p className="text-sm text-red-600 mt-1">
                   Dostępny w nocy i w weekendy w pilnych przypadkach.
                 </p>
