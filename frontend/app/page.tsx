@@ -6,8 +6,6 @@ import LandingHero from '@/app/components/LandingHero'
 import LandingServices from '@/app/components/LandingServices'
 import LandingTestimonials from '@/app/components/LandingTestimonials'
 import LocalBusinessSchema from '@/app/components/LocalBusinessSchema'
-import SiteFooter from '@/app/components/SiteFooter'
-import SiteHeader from '@/app/components/SiteHeader'
 import {sanityFetch} from '@/sanity/lib/live'
 import {landingPageQuery, settingsQuery} from '@/sanity/lib/queries'
 
@@ -24,26 +22,22 @@ export default async function Page() {
   return (
     <>
       <LocalBusinessSchema settings={settings} />
-      <SiteHeader settings={settings} />
-      <main>
-        {page.pageBuilder?.map((block) => {
-          switch (block._type) {
-            case 'heroSection':
-              return <LandingHero key={block._key} block={block} settings={settings} />
-            case 'servicesSection':
-              return <LandingServices key={block._key} block={block} />
-            case 'testimonialsSection':
-              return <LandingTestimonials key={block._key} block={block} />
-            case 'aboutSection':
-              return <LandingAbout key={block._key} block={block} />
-            case 'contactSection':
-              return <LandingContact key={block._key} block={block} settings={settings} />
-            default:
-              return null
-          }
-        })}
-      </main>
-      <SiteFooter settings={settings} />
+      {page.pageBuilder?.map((block) => {
+        switch (block._type) {
+          case 'heroSection':
+            return <LandingHero key={block._key} block={block} settings={settings} />
+          case 'servicesSection':
+            return <LandingServices key={block._key} block={block} />
+          case 'testimonialsSection':
+            return <LandingTestimonials key={block._key} block={block} />
+          case 'aboutSection':
+            return <LandingAbout key={block._key} block={block} />
+          case 'contactSection':
+            return <LandingContact key={block._key} block={block} settings={settings} />
+          default:
+            return null
+        }
+      })}
     </>
   )
 }
