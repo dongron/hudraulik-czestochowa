@@ -4,7 +4,7 @@ type Props = {
   settings: SettingsQueryResult
 }
 
-export default function LandingFooter({settings}: Props) {
+export default function SiteFooter({settings}: Props) {
   const phone = settings?.phone
   const phoneHref = phone ? `tel:${phone.replace(/\s+/g, '')}` : undefined
   const address = settings?.address

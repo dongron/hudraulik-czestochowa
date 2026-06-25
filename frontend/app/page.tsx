@@ -2,12 +2,12 @@ import {notFound} from 'next/navigation'
 
 import LandingAbout from '@/app/components/LandingAbout'
 import LandingContact from '@/app/components/LandingContact'
-import LandingFooter from '@/app/components/LandingFooter'
 import LandingHero from '@/app/components/LandingHero'
-import LandingNav from '@/app/components/LandingNav'
 import LandingServices from '@/app/components/LandingServices'
 import LandingTestimonials from '@/app/components/LandingTestimonials'
 import LocalBusinessSchema from '@/app/components/LocalBusinessSchema'
+import SiteFooter from '@/app/components/SiteFooter'
+import SiteHeader from '@/app/components/SiteHeader'
 import {sanityFetch} from '@/sanity/lib/live'
 import {landingPageQuery, settingsQuery} from '@/sanity/lib/queries'
 
@@ -24,7 +24,7 @@ export default async function Page() {
   return (
     <>
       <LocalBusinessSchema settings={settings} />
-      <LandingNav settings={settings} />
+      <SiteHeader settings={settings} />
       <main>
         {page.pageBuilder?.map((block) => {
           switch (block._type) {
@@ -43,7 +43,7 @@ export default async function Page() {
           }
         })}
       </main>
-      <LandingFooter settings={settings} />
+      <SiteFooter settings={settings} />
     </>
   )
 }

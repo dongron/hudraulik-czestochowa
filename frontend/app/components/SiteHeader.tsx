@@ -13,7 +13,7 @@ const NAV_LINKS = [
   {href: '#kontakt', label: 'Kontakt'},
 ]
 
-export default function LandingNav({settings}: Props) {
+export default function SiteHeader({settings}: Props) {
   const phone = settings?.phone
   const phoneHref = phone ? `tel:${phone.replace(/\s+/g, '')}` : undefined
 
