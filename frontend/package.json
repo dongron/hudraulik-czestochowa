@@ -12,6 +12,8 @@
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "sanity:typegen": "cd ../studio && sanity schema extract --enforce-required-fields --path ../sanity.schema.json && cd ../frontend && sanity typegen generate",
     "start": "next start",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -35,13 +37,17 @@
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "^1.19.5",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^22.19.17",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.2",
+    "jsdom": "^29.1.1",
     "sanity": "^5.23.0",
     "typescript": "5.9.3",
+    "vitest": "^4.1.9",
     "wrangler": "^4.87.0"
   }
 }

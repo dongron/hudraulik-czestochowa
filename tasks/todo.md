@@ -81,3 +81,21 @@ Full detail in [plan.md](./plan.md) · spec in [SPEC.md](../SPEC.md).
         (unset id → no `g/collect`)
 - [~] **Checkpoint E (release gate)** — code + HTML evidence green; awaiting the
       manual DebugView/Lighthouse confirm and Cloudflare `NEXT_PUBLIC_GA_ID` before merge/deploy
+
+---
+
+## Tests (added via /agent-skills:test)
+
+Vitest + jsdom + React Testing Library in the frontend workspace.
+Run: `pnpm --filter frontend test`.
+
+- [x] `app/lib/analytics.test.ts` — `isAnalyticsEvent` (known/unknown names);
+      `trackEvent` forwards to gtag and no-ops when gtag is absent
+- [x] `app/components/AnalyticsClickTracker.test.tsx` — delegation + `data-ga-*`
+      → param derivation: child-node click, `navigation_click` section, ignores
+      untagged elements and unknown event names
+- [x] **RED proven** — breaking the param derivation (`location` → `gaLocation`)
+      fails the relevant assertions; reverted to green
+- [x] 8/8 passing · `type-check` + `lint` + `build` unaffected
+- Note: `generate_lead` form effect is not unit-tested (needs server-action +
+      router mocks) — covered by manual DebugView; add later if wanted
