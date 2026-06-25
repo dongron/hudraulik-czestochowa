@@ -9,6 +9,7 @@ import {VisualEditing} from 'next-sanity/visual-editing'
 import {Toaster} from 'sonner'
 
 import DraftModeToast from '@/app/components/DraftModeToast'
+import GoogleAnalytics from '@/app/components/GoogleAnalytics'
 import * as demo from '@/sanity/lib/demo'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
 import {settingsQuery} from '@/sanity/lib/queries'
@@ -84,6 +85,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           <main className="">{children}</main>
         </section>
         <SpeedInsights />
+        <GoogleAnalytics />
       </body>
     </html>
   )
