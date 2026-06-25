@@ -17,3 +17,5 @@ pnpm exec prettier --write <changed-files>
 
 This project uses `@sanity/prettier-config`. Scope this rule to the
 `/Users/dominik/projects/hydraulik` project only.
+
+Keep all specs, tasks, todos etc in "specs" directory.
