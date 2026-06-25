@@ -1,9 +1,10 @@
 'use client'
 
-import {Suspense, useActionState} from 'react'
+import {Suspense, useActionState, useEffect} from 'react'
 import {useSearchParams} from 'next/navigation'
 
 import {submitContactForm, type ContactFormState} from '@/app/landing-actions'
+import {trackEvent} from '@/app/lib/analytics'
 import type {LandingPageQueryResult, SettingsQueryResult} from '@/sanity.types'
 
 type ContactBlock = Extract<
@@ -28,6 +29,15 @@ function ContactFormInner({formEnabled}: {formEnabled: boolean}) {
   const [state, formAction, pending] = useActionState(submitContactForm, initialState)
   const searchParams = useSearchParams()
   const presetMessage = intentMessages[searchParams.get('intent') ?? ''] ?? ''
+
+  // Fire one GA4 lead event per successful submit. Keyed on the state object
+  // (useActionState returns a fresh object each result) so resubmits re-fire and
+  // error/idle states never do. No form-field values are sent (no PII).
+  useEffect(() => {
+    if (state.status === 'success') {
+      trackEvent('generate_lead', {method: 'form', form_location: 'contact'})
+    }
+  }, [state])
 
   if (!formEnabled) {
     return (

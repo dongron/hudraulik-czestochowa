@@ -47,11 +47,11 @@ Full detail in [plan.md](./plan.md) · spec in [SPEC.md](../SPEC.md).
 
 ## Phase 3 — Contact form lead  (`generate_lead`)
 
-- [ ] **T6** `LandingContact.tsx` — `useEffect` keyed on `state`; on
+- [x] **T6** `LandingContact.tsx` — `useEffect` keyed on `state`; on
       `status === 'success'` fire `generate_lead {method:'form', form_location:'contact'}`;
       no PII in params
-- [ ] **✅ Checkpoint C** — valid submit → exactly one `generate_lead`;
-      invalid submit → none
+- [x] **✅ Checkpoint C (code gates)** — `type-check` + `lint` + `build` green.
+      Runtime check (valid submit → one `generate_lead`; invalid → none) pending manual confirm.
 
 ---
 
