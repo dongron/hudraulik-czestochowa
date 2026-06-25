@@ -70,7 +70,14 @@ Full detail in [plan.md](./plan.md) · spec in [SPEC.md](../SPEC.md).
 
 ## Phase 5 — Verification & ship
 
-- [ ] **T9** Full pass: `type-check` + `lint` + `next build` green; DebugView
-      walk-through of `page_view` + all 4 events; negative check (unset id →
-      silent); Lighthouse mobile ≥ 85
-- [ ] **✅ Checkpoint E (release gate)** — all SPEC.md §2 acceptance criteria met
+- [x] **T9** Full pass — automated + served-HTML evidence:
+  - [x] `type-check` ✅ · `lint` ✅ · `next build` ✅ (compiled 5.3s)
+  - [x] Served HTML on `localhost:3000` confirms GA wiring:
+    - GA script `gtag/js?id=G-6Y7V39HCJ7` + inline `gtag('config')` present
+    - `phone_call` ×4 · `maps_click` ×1 · `navigation_click` ×10 (5 nav + 4 footer + 1 hero)
+    - `data-ga-location` (nav/hero/contact/footer) and `data-ga-section` values all correct
+  - [ ] **Manual (needs Google auth / Chrome):** GA4 DebugView shows `page_view`
+        + all 4 events firing on click; Lighthouse mobile ≥ 85; negative check
+        (unset id → no `g/collect`)
+- [~] **Checkpoint E (release gate)** — code + HTML evidence green; awaiting the
+      manual DebugView/Lighthouse confirm and Cloudflare `NEXT_PUBLIC_GA_ID` before merge/deploy
