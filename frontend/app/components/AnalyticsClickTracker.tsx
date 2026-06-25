@@ -26,7 +26,9 @@ export default function AnalyticsClickTracker() {
 
       const params: AnalyticsEventParams = {}
       for (const [key, value] of Object.entries(el.dataset)) {
-        if (key === 'gaEvent' || !key.startsWith('ga') || value === undefined) continue
+        // Match only data-ga-* attributes (dataset key `ga` + uppercase boundary),
+        // not lookalikes such as `data-gallery` -> `gallery`.
+        if (key === 'gaEvent' || !/^ga[A-Z]/.test(key) || value === undefined) continue
         const paramKey = key.slice(2, 3).toLowerCase() + key.slice(3)
         params[paramKey] = value
       }

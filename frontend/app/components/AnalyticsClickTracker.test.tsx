@@ -50,4 +50,14 @@ describe('AnalyticsClickTracker', () => {
     fireEvent.click(document.getElementById('bad')!)
     expect(gtag).not.toHaveBeenCalled()
   })
+
+  it('ignores dataset keys that merely start with "ga" (e.g. data-gallery)', () => {
+    document.body.insertAdjacentHTML(
+      'beforeend',
+      '<a id="lookalike" data-ga-event="phone_call" data-ga-location="hero" data-gallery="x">y</a>',
+    )
+    fireEvent.click(document.getElementById('lookalike')!)
+    // Exact params: no spurious key derived from data-gallery.
+    expect(gtag).toHaveBeenCalledWith('event', 'phone_call', {location: 'hero'})
+  })
 })
