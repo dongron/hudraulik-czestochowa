@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import type {SettingsQueryResult} from '@/sanity.types'
 
 type Props = {
@@ -48,44 +50,44 @@ export default function SiteFooter({settings}: Props) {
             <p className="font-semibold text-white mb-2">Nawigacja</p>
             <ul className="space-y-1 text-sm">
               <li>
-                <a
-                  href="#uslugi"
+                <Link
+                  href="/#uslugi"
                   data-ga-event="navigation_click"
                   data-ga-section="uslugi"
                   className="text-gray-300 hover:text-white"
                 >
                   Usługi
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#opinie"
+                <Link
+                  href="/#opinie"
                   data-ga-event="navigation_click"
                   data-ga-section="opinie"
                   className="text-gray-300 hover:text-white"
                 >
                   Opinie
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#o-mnie"
+                <Link
+                  href="/#o-mnie"
                   data-ga-event="navigation_click"
                   data-ga-section="o-mnie"
                   className="text-gray-300 hover:text-white"
                 >
                   O mnie
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#kontakt"
+                <Link
+                  href="/#kontakt"
                   data-ga-event="navigation_click"
                   data-ga-section="kontakt"
                   className="text-gray-300 hover:text-white"
                 >
                   Kontakt
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

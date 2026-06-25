@@ -7,10 +7,10 @@ type Props = {
 }
 
 const NAV_LINKS = [
-  {href: '#uslugi', label: 'Usługi'},
-  {href: '#opinie', label: 'Opinie'},
-  {href: '#o-mnie', label: 'O mnie'},
-  {href: '#kontakt', label: 'Kontakt'},
+  {href: '/#uslugi', section: 'uslugi', label: 'Usługi'},
+  {href: '/#opinie', section: 'opinie', label: 'Opinie'},
+  {href: '/#o-mnie', section: 'o-mnie', label: 'O mnie'},
+  {href: '/#kontakt', section: 'kontakt', label: 'Kontakt'},
 ]
 
 export default function SiteHeader({settings}: Props) {
@@ -21,7 +21,7 @@ export default function SiteHeader({settings}: Props) {
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link
-          href="#top"
+          href="/"
           data-ga-event="navigation_click"
           data-ga-section="top"
           className="font-bold text-lg tracking-tight text-gray-900"
@@ -31,15 +31,15 @@ export default function SiteHeader({settings}: Props) {
 
         <nav className="hidden md:flex items-center gap-6">
           {NAV_LINKS.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               data-ga-event="navigation_click"
-              data-ga-section={l.href.slice(1)}
+              data-ga-section={l.section}
               className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
