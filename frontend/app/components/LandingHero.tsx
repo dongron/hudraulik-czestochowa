@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import type {LandingPageQueryResult, SettingsQueryResult} from '@/sanity.types'
 
 type HeroBlock = Extract<
@@ -16,11 +18,17 @@ export default function LandingHero({block, settings}: Props) {
   const emergency = settings?.emergencyAvailable
 
   return (
-    <section
-      id="top"
-      className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50 py-16 md:py-24 lg:py-32"
-    >
-      <div className="container mx-auto px-4">
+    <section id="top" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+      <Image
+        src="/images/hero-bg.png"
+        alt="Klucz hydrauliczny i przeciekająca rura"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-right md:object-center"
+      />
+      <div className="absolute inset-0 bg-white/80 md:bg-white/70" />
+      <div className="container relative mx-auto px-4">
         <div className="mx-auto max-w-4xl text-center">
           {block.eyebrow && (
             <p className="text-sm md:text-base font-semibold uppercase tracking-wider text-blue-600 mb-4">

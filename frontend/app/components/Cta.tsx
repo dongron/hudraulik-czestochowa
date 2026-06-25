@@ -57,7 +57,7 @@ export default function CTA({block}: CtaProps) {
           {image?.asset?._ref && (
             <Image
               id={image.asset._ref}
-              alt="Demo image"
+              alt={heading || ''}
               width={704}
               crop={image.crop}
               mode="cover"
