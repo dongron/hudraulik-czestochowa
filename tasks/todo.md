@@ -94,8 +94,10 @@ Run: `pnpm --filter frontend test`.
 - [x] `app/components/AnalyticsClickTracker.test.tsx` — delegation + `data-ga-*`
       → param derivation: child-node click, `navigation_click` section, ignores
       untagged elements and unknown event names
+- [x] `app/components/LandingContact.test.tsx` — `generate_lead` fires once on a
+      successful submit and not on a failed one (mocks the server action +
+      `useSearchParams`; fills fields and clicks the submit button)
 - [x] **RED proven** — breaking the param derivation (`location` → `gaLocation`)
-      fails the relevant assertions; reverted to green
-- [x] 8/8 passing · `type-check` + `lint` + `build` unaffected
-- Note: `generate_lead` form effect is not unit-tested (needs server-action +
-      router mocks) — covered by manual DebugView; add later if wanted
+      and the form `form_location` (`contact` → `footer`) fails the relevant
+      assertions; reverted to green
+- [x] 10/10 passing · `type-check` + `lint` + `build` unaffected
