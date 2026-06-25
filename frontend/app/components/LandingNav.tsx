@@ -20,7 +20,12 @@ export default function LandingNav({settings}: Props) {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="#top" className="font-bold text-lg tracking-tight text-gray-900">
+        <Link
+          href="#top"
+          data-ga-event="navigation_click"
+          data-ga-section="top"
+          className="font-bold text-lg tracking-tight text-gray-900"
+        >
           {settings?.title || 'Usługi Hydrauliczne'}
         </Link>
 
@@ -29,6 +34,8 @@ export default function LandingNav({settings}: Props) {
             <a
               key={l.href}
               href={l.href}
+              data-ga-event="navigation_click"
+              data-ga-section={l.href.slice(1)}
               className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
             >
               {l.label}

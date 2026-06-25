@@ -179,6 +179,8 @@ export default function LandingContact({block, settings}: Props) {
                     href={mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-ga-event="maps_click"
+                    data-ga-location="contact"
                     className="inline-flex items-center gap-1 mt-2 text-sm text-blue-600 hover:text-blue-700"
                   >
                     Otwórz w Google Maps

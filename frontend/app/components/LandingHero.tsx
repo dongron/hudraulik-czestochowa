@@ -70,6 +70,8 @@ export default function LandingHero({block, settings}: Props) {
             )}
             <a
               href="#kontakt"
+              data-ga-event="navigation_click"
+              data-ga-section="kontakt"
               className="inline-flex items-center justify-center rounded-md bg-white border border-gray-300 px-6 py-3 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors"
             >
               Napisz wiadomość

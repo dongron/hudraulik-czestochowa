@@ -57,14 +57,14 @@ Full detail in [plan.md](./plan.md) · spec in [SPEC.md](../SPEC.md).
 
 ## Phase 4 — Secondary signals  (`maps_click`, `navigation_click`)
 
-- [ ] **T7** `LandingContact.tsx` maps link →
+- [x] **T7** `LandingContact.tsx` maps link →
       `data-ga-event="maps_click"` + `data-ga-location="contact"`
-- [ ] **T8** In-page anchors → `data-ga-event="navigation_click"` + `data-ga-section`:
-  - [ ] `LandingNav.tsx` — 4 nav links + `#top` logo
-  - [ ] `LandingFooter.tsx` — 4 nav links
-  - [ ] `LandingHero.tsx` — `#kontakt` secondary CTA
-- [ ] **✅ Checkpoint D** — maps → `maps_click`; each anchor → `navigation_click`
-      with matching `section`
+- [x] **T8** In-page anchors → `data-ga-event="navigation_click"` + `data-ga-section`:
+  - [x] `LandingNav.tsx` — 4 nav links + `#top` logo
+  - [x] `LandingFooter.tsx` — 4 nav links
+  - [x] `LandingHero.tsx` — `#kontakt` secondary CTA
+- [x] **✅ Checkpoint D (code gates)** — `type-check` + `lint` + `build` green.
+      Runtime check (maps → `maps_click`; anchors → `navigation_click` w/ `section`) pending manual confirm.
 
 ---
 

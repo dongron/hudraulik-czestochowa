@@ -48,22 +48,42 @@ export default function LandingFooter({settings}: Props) {
             <p className="font-semibold text-white mb-2">Nawigacja</p>
             <ul className="space-y-1 text-sm">
               <li>
-                <a href="#uslugi" className="text-gray-300 hover:text-white">
+                <a
+                  href="#uslugi"
+                  data-ga-event="navigation_click"
+                  data-ga-section="uslugi"
+                  className="text-gray-300 hover:text-white"
+                >
                   Usługi
                 </a>
               </li>
               <li>
-                <a href="#opinie" className="text-gray-300 hover:text-white">
+                <a
+                  href="#opinie"
+                  data-ga-event="navigation_click"
+                  data-ga-section="opinie"
+                  className="text-gray-300 hover:text-white"
+                >
                   Opinie
                 </a>
               </li>
               <li>
-                <a href="#o-mnie" className="text-gray-300 hover:text-white">
+                <a
+                  href="#o-mnie"
+                  data-ga-event="navigation_click"
+                  data-ga-section="o-mnie"
+                  className="text-gray-300 hover:text-white"
+                >
                   O mnie
                 </a>
               </li>
               <li>
-                <a href="#kontakt" className="text-gray-300 hover:text-white">
+                <a
+                  href="#kontakt"
+                  data-ga-event="navigation_click"
+                  data-ga-section="kontakt"
+                  className="text-gray-300 hover:text-white"
+                >
                   Kontakt
                 </a>
               </li>
