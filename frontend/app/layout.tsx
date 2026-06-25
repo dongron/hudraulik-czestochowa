@@ -8,6 +8,7 @@ import {toPlainText} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {Toaster} from 'sonner'
 
+import AnalyticsClickTracker from '@/app/components/AnalyticsClickTracker'
 import DraftModeToast from '@/app/components/DraftModeToast'
 import GoogleAnalytics from '@/app/components/GoogleAnalytics'
 import * as demo from '@/sanity/lib/demo'
@@ -86,6 +87,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
         </section>
         <SpeedInsights />
         <GoogleAnalytics />
+        <AnalyticsClickTracker />
       </body>
     </html>
   )

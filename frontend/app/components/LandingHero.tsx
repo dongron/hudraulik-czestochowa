@@ -52,6 +52,8 @@ export default function LandingHero({block, settings}: Props) {
             {phoneHref && (
               <a
                 href={phoneHref}
+                data-ga-event="phone_call"
+                data-ga-location="hero"
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-6 py-3 text-base font-semibold text-white hover:bg-blue-700 transition-colors shadow-md"
               >
                 <svg

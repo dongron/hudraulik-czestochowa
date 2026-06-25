@@ -39,6 +39,8 @@ export default function LandingNav({settings}: Props) {
         {phoneHref && (
           <a
             href={phoneHref}
+            data-ga-event="phone_call"
+            data-ga-location="nav"
             className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
             aria-label={`Zadzwoń ${phone}`}
           >

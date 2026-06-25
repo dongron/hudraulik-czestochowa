@@ -31,17 +31,17 @@ Full detail in [plan.md](./plan.md) · spec in [SPEC.md](../SPEC.md).
 
 ## Phase 2 — Click infra + phone calls  (`phone_call`)
 
-- [ ] **T4** `app/components/AnalyticsClickTracker.tsx` (`'use client'`) —
+- [x] **T4** `app/components/AnalyticsClickTracker.tsx` (`'use client'`) —
       single delegated `document` click listener (`closest('[data-ga-event]')` →
       read `data-ga-*` → `trackEvent`), no `preventDefault`, cleanup on unmount;
-      mount in `layout.tsx`
-- [ ] **T5** Add `data-ga-event="phone_call"` + `data-ga-location` to `tel:` links:
-  - [ ] `LandingNav.tsx` → `nav`
-  - [ ] `LandingHero.tsx` → `hero`
-  - [ ] `LandingContact.tsx` → `contact`
-  - [ ] `LandingFooter.tsx` → `footer`
-- [ ] **✅ Checkpoint B** — each phone link fires `phone_call` with right
-      `location`; dialing/navigation unaffected
+      mounted in `layout.tsx`
+- [x] **T5** Add `data-ga-event="phone_call"` + `data-ga-location` to `tel:` links:
+  - [x] `LandingNav.tsx` → `nav`
+  - [x] `LandingHero.tsx` → `hero`
+  - [x] `LandingContact.tsx` → `contact`
+  - [x] `LandingFooter.tsx` → `footer`
+- [x] **✅ Checkpoint B (code gates)** — `type-check` + `lint` + `build` green.
+      Runtime check (each phone link → `phone_call` w/ right `location`) pending manual confirm.
 
 ---
 

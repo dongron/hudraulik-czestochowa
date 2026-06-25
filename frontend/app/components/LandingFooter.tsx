@@ -26,7 +26,12 @@ export default function LandingFooter({settings}: Props) {
           <div>
             <p className="font-semibold text-white mb-2">Kontakt</p>
             {phoneHref && (
-              <a href={phoneHref} className="block text-gray-300 hover:text-white">
+              <a
+                href={phoneHref}
+                data-ga-event="phone_call"
+                data-ga-location="footer"
+                className="block text-gray-300 hover:text-white"
+              >
                 {phone}
               </a>
             )}

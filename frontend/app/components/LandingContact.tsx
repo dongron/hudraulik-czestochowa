@@ -145,6 +145,8 @@ export default function LandingContact({block, settings}: Props) {
                 <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Telefon</p>
                 <a
                   href={phoneHref}
+                  data-ga-event="phone_call"
+                  data-ga-location="contact"
                   className="text-2xl font-bold text-blue-600 hover:text-blue-700"
                 >
                   {phone}
