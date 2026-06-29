@@ -23,11 +23,11 @@ PageSpeed regression (must stay ≥ 85 mobile per SC-004).
 
 ### Confirmed decisions (from clarification)
 
-| Decision | Choice |
-|---|---|
-| Consent / GDPR | **Load GA unconditionally** — no consent banner (may be added later) |
-| Measurement ID storage | **`NEXT_PUBLIC_GA_ID` environment variable** |
-| What to track | **Phone clicks, contact-form submit, Google Maps click, nav/section anchor clicks** |
+| Decision               | Choice                                                                              |
+| ---------------------- | ----------------------------------------------------------------------------------- |
+| Consent / GDPR         | **Load GA unconditionally** — no consent banner (may be added later)                |
+| Measurement ID storage | **`NEXT_PUBLIC_GA_ID` environment variable**                                        |
+| What to track          | **Phone clicks, contact-form submit, Google Maps click, nav/section anchor clicks** |
 
 ### Assumptions (correct me before I build)
 
@@ -88,12 +88,12 @@ PageSpeed regression (must stay ≥ 85 mobile per SC-004).
 
 ### Event catalogue (single source of truth)
 
-| Event name | Trigger | Params |
-|---|---|---|
-| `phone_call` | click on `tel:` link | `location` |
-| `generate_lead` | successful contact-form submit | `method: 'form'`, `form_location` |
-| `maps_click` | click on Google Maps link | `location` |
-| `navigation_click` | click on in-page nav/section anchor | `section` |
+| Event name         | Trigger                             | Params                            |
+| ------------------ | ----------------------------------- | --------------------------------- |
+| `phone_call`       | click on `tel:` link                | `location`                        |
+| `generate_lead`    | successful contact-form submit      | `method: 'form'`, `form_location` |
+| `maps_click`       | click on Google Maps link           | `location`                        |
+| `navigation_click` | click on in-page nav/section anchor | `section`                         |
 
 ---
 
@@ -168,7 +168,7 @@ No unit test runner exists in the project, so verification is manual + build gat
    - submit the form → `generate_lead`,
    - click maps → `maps_click`,
    - click each nav anchor → `navigation_click` with right `section`.
-   Cross-check requests to `google-analytics.com/g/collect` in DevTools Network.
+     Cross-check requests to `google-analytics.com/g/collect` in DevTools Network.
 3. **Negative check:** unset `NEXT_PUBLIC_GA_ID` → no gtag script, no collect requests.
 4. **Perf check:** Lighthouse mobile ≥ 85 (GA is `afterInteractive`).
 
@@ -179,16 +179,19 @@ No unit test runner exists in the project, so verification is manual + build gat
 ## 7. Boundaries
 
 **Always**
+
 - Keep `tel:` as the primary conversion; tracking must never block/delay navigation.
 - Gate GA behind the presence of `NEXT_PUBLIC_GA_ID`.
 - Keep changes inside `frontend/`; preserve existing Sanity-driven content.
 
 **Ask first**
+
 - Adding a consent banner / Consent Mode (deferred for now — flagged GDPR risk).
 - Adding any new dependency (`@next/third-parties`, GTM, etc.).
 - Changing event names/params after they're live (breaks GA reports/historical data).
 
 **Never**
+
 - Hardcode the Measurement ID in source.
 - Send PII (names, phone numbers, form field values) to GA.
 - Convert RSC landing components into client components just to track clicks.

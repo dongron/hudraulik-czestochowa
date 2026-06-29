@@ -45,7 +45,9 @@ describe('LandingContact generate_lead tracking', () => {
     vi.clearAllMocks()
   })
 
-  const fillRequiredFields = (getByLabelText: ReturnType<typeof renderContact>['getByLabelText']) => {
+  const fillRequiredFields = (
+    getByLabelText: ReturnType<typeof renderContact>['getByLabelText'],
+  ) => {
     fireEvent.change(getByLabelText(/Imię i nazwisko/i), {target: {value: 'Jan Kowalski'}})
     fireEvent.change(getByLabelText(/E-mail/i), {target: {value: 'jan@example.com'}})
     fireEvent.change(getByLabelText(/Wiadomość/i), {target: {value: 'Proszę o kontakt.'}})

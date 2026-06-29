@@ -23,7 +23,12 @@ export async function submitContactForm(
   }
 
   // Mock submission — log only
-  console.info('[contact-form] mock submission', {name, email, phone, messageLength: message.length})
+  console.info('[contact-form] mock submission', {
+    name,
+    email,
+    phone,
+    messageLength: message.length,
+  })
 
   return {
     status: 'success',

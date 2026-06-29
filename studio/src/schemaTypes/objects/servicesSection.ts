@@ -1,4 +1,4 @@
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
 import {WrenchIcon} from '@sanity/icons'
 
 export const servicesSection = defineType({
@@ -6,6 +6,8 @@ export const servicesSection = defineType({
   title: 'Services Section',
   type: 'object',
   icon: WrenchIcon,
+  description:
+    'Services are managed as individual Service documents and listed here automatically, grouped by category.',
   fields: [
     defineField({
       name: 'heading',
@@ -18,60 +20,13 @@ export const servicesSection = defineType({
       title: 'Subheading',
       type: 'string',
     }),
-    defineField({
-      name: 'services',
-      title: 'Services',
-      type: 'array',
-      validation: (Rule) => Rule.required().min(1),
-      of: [
-        defineArrayMember({
-          type: 'object',
-          name: 'serviceItem',
-          title: 'Service',
-          fields: [
-            defineField({
-              name: 'name',
-              title: 'Name',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'category',
-              title: 'Category',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-              options: {
-                list: [
-                  {title: 'Naprawy', value: 'naprawy'},
-                  {title: 'Montaże', value: 'montaze'},
-                  {title: 'Czyszczenie', value: 'czyszczenie'},
-                ],
-                layout: 'radio',
-              },
-            }),
-            defineField({
-              name: 'description',
-              title: 'Description',
-              type: 'string',
-            }),
-          ],
-          preview: {
-            select: {title: 'name', subtitle: 'category'},
-          },
-        }),
-      ],
-    }),
   ],
   preview: {
-    select: {
-      title: 'heading',
-      services: 'services',
-    },
-    prepare({title, services}) {
-      const count = Array.isArray(services) ? services.length : 0
+    select: {title: 'heading'},
+    prepare({title}) {
       return {
         title: title || 'Services',
-        subtitle: `${count} service${count === 1 ? '' : 's'}`,
+        subtitle: 'Services Section',
       }
     },
   },

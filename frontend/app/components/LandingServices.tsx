@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import type {LandingPageQueryResult} from '@/sanity.types'
 
 type ServicesBlock = Extract<
@@ -36,9 +38,7 @@ export default function LandingServices({block}: Props) {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             {block.heading}
           </h2>
-          {block.subheading && (
-            <p className="text-lg text-gray-600">{block.subheading}</p>
-          )}
+          {block.subheading && <p className="text-lg text-gray-600">{block.subheading}</p>}
         </div>
 
         <div className="space-y-12">
@@ -49,24 +49,27 @@ export default function LandingServices({block}: Props) {
               </h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {group.items.map((service) => (
-                  <li
-                    key={service._key}
-                    className="rounded-lg border border-gray-200 bg-gray-50 p-5 hover:border-blue-300 hover:shadow-md transition-all"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span
-                        className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-blue-600"
-                        aria-hidden="true"
-                      />
-                      <div>
-                        <p className="font-semibold text-gray-900">{service.name}</p>
-                        {service.description && (
-                          <p className="text-sm text-gray-600 mt-1">
-                            {service.description}
-                          </p>
-                        )}
+                  <li key={service._id}>
+                    <Link
+                      href={`/uslugi/${service.slug}`}
+                      data-ga-event="navigation_click"
+                      data-ga-section="uslugi"
+                      data-ga-location={service.slug}
+                      className="block h-full rounded-lg border border-gray-200 bg-gray-50 p-5 transition-all hover:border-blue-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+                    >
+                      <div className="flex items-start gap-3">
+                        <span
+                          className="flex-shrink-0 w-2 h-2 mt-2 rounded-full bg-blue-600"
+                          aria-hidden="true"
+                        />
+                        <div>
+                          <p className="font-semibold text-gray-900">{service.name}</p>
+                          {service.cardDescription && (
+                            <p className="text-sm text-gray-600 mt-1">{service.cardDescription}</p>
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   </li>
                 ))}
               </ul>

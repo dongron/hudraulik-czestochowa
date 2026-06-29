@@ -79,12 +79,14 @@ export const landingPageQuery = defineQuery(`
         _type,
         heading,
         subheading,
-        "services": services[]{
-          _key,
+        "services": *[_type == "service" && defined(slug.current)]{
+          _id,
           name,
+          "slug": slug.current,
           category,
-          description,
-        },
+          cardDescription,
+          displayOrder,
+        } | order(coalesce(displayOrder, 9999) asc, name asc),
       },
       _type == "testimonialsSection" => {
         _key,
@@ -119,10 +121,39 @@ export const landingPageQuery = defineQuery(`
 `)
 
 export const sitemapData = defineQuery(`
-  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {
+  *[(_type == "page" || _type == "post" || _type == "service") && defined(slug.current)] | order(_type asc) {
     "slug": slug.current,
     _type,
     _updatedAt,
+  }
+`)
+
+export const serviceSlugs = defineQuery(`
+  *[_type == "service" && defined(slug.current)]
+  {"slug": slug.current}
+`)
+
+export const serviceQuery = defineQuery(`
+  *[_type == "service" && slug.current == $slug][0]{
+    _id,
+    name,
+    "slug": slug.current,
+    category,
+    cardDescription,
+    heroIntro,
+    "image": image{ asset->, hotspot, crop },
+    imageAlt,
+    priceFrom,
+    body[]{
+      ...,
+      markDefs[]{
+        ...,
+        ${linkReference}
+      }
+    },
+    faq[]{ _key, question, answer },
+    seoTitle,
+    seoDescription,
   }
 `)
 

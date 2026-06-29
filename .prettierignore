@@ -1,19 +1,10 @@
-.github/**
+# dirs
+.claude
+.specify
+specs
 
-# Generated files
-package-lock.json
-**/package-lock.json
-yarn.lock
-**/yarn.lock
-pnpm-lock.yaml
-**/pnpm-lock.yaml
-
-# Build outputs
-dist/
-build/
-out/
-.next/
-
-# Other generated files
-*.min.js
-*.min.css
+# files
+AGENTS.md
+CLAUDE.md
+open-next.confog.ts
+s

@@ -61,13 +61,6 @@ export type ServicesSection = {
   _type: 'servicesSection'
   heading: string
   subheading?: string
-  services: Array<{
-    name: string
-    category: 'naprawy' | 'montaze' | 'czyszczenie'
-    description?: string
-    _type: 'serviceItem'
-    _key: string
-  }>
 }
 
 export type HeroSection = {
@@ -183,6 +176,60 @@ export type Button = {
   link?: Link
 }
 
+export type Service = {
+  _id: string
+  _type: 'service'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+  category: 'naprawy' | 'montaze' | 'czyszczenie'
+  cardDescription?: string
+  displayOrder?: number
+  heroIntro?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  imageAlt?: string
+  priceFrom?: string
+  body?: BlockContent
+  faq?: Array<{
+    question: string
+    answer: string
+    _type: 'faqItem'
+    _key: string
+  }>
+  seoTitle?: string
+  seoDescription?: string
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x: number
+  y: number
+  height: number
+  width: number
+}
+
+export type Slug = {
+  _type: 'slug'
+  current: string
+  source?: string
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -229,22 +276,6 @@ export type Settings = {
     metadataBase?: string
     _type: 'image'
   }
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x: number
-  y: number
-  height: number
-  width: number
 }
 
 export type Page = {
@@ -327,12 +358,6 @@ export type Person = {
     alt?: string
     _type: 'image'
   }
-}
-
-export type Slug = {
-  _type: 'slug'
-  current: string
-  source?: string
 }
 
 export type SanityAssistInstructionTask = {
@@ -584,14 +609,15 @@ export type AllSanitySchemaTypes =
   | BlockContentTextOnly
   | BlockContent
   | Button
-  | Settings
+  | Service
   | SanityImageCrop
   | SanityImageHotspot
+  | Slug
+  | Settings
   | Page
   | PersonReference
   | Post
   | Person
-  | Slug
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
   | SanityAssistSchemaTypeAnnotations

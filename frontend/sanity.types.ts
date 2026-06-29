@@ -61,13 +61,6 @@ export type ServicesSection = {
   _type: 'servicesSection'
   heading: string
   subheading?: string
-  services: Array<{
-    name: string
-    category: 'naprawy' | 'montaze' | 'czyszczenie'
-    description?: string
-    _type: 'serviceItem'
-    _key: string
-  }>
 }
 
 export type HeroSection = {
@@ -183,6 +176,60 @@ export type Button = {
   link?: Link
 }
 
+export type Service = {
+  _id: string
+  _type: 'service'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+  category: 'naprawy' | 'montaze' | 'czyszczenie'
+  cardDescription?: string
+  displayOrder?: number
+  heroIntro?: string
+  image?: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  imageAlt?: string
+  priceFrom?: string
+  body?: BlockContent
+  faq?: Array<{
+    question: string
+    answer: string
+    _type: 'faqItem'
+    _key: string
+  }>
+  seoTitle?: string
+  seoDescription?: string
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x: number
+  y: number
+  height: number
+  width: number
+}
+
+export type Slug = {
+  _type: 'slug'
+  current: string
+  source?: string
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -229,22 +276,6 @@ export type Settings = {
     metadataBase?: string
     _type: 'image'
   }
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x: number
-  y: number
-  height: number
-  width: number
 }
 
 export type Page = {
@@ -327,12 +358,6 @@ export type Person = {
     alt?: string
     _type: 'image'
   }
-}
-
-export type Slug = {
-  _type: 'slug'
-  current: string
-  source?: string
 }
 
 export type SanityAssistInstructionTask = {
@@ -584,14 +609,15 @@ export type AllSanitySchemaTypes =
   | BlockContentTextOnly
   | BlockContent
   | Button
-  | Settings
+  | Service
   | SanityImageCrop
   | SanityImageHotspot
+  | Slug
+  | Settings
   | Page
   | PersonReference
   | Post
   | Person
-  | Slug
   | SanityAssistInstructionTask
   | SanityAssistTaskStatus
   | SanityAssistSchemaTypeAnnotations
@@ -777,13 +803,6 @@ export type GetPageQueryResult = {
         _type: 'servicesSection'
         heading: string
         subheading?: string
-        services: Array<{
-          name: string
-          category: 'czyszczenie' | 'montaze' | 'naprawy'
-          description?: string
-          _type: 'serviceItem'
-          _key: string
-        }>
       }
     | {
         _key: string
@@ -804,7 +823,7 @@ export type GetPageQueryResult = {
 
 // Source: sanity/lib/queries.ts
 // Variable: landingPageQuery
-// Query: *[_type == "page" && slug.current == "home"][0]{    _id,    _type,    name,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "heroSection" => {        _key,        _type,        eyebrow,        heading,        subheading,        ctaLabel,      },      _type == "servicesSection" => {        _key,        _type,        heading,        subheading,        "services": services[]{          _key,          name,          category,          description,        },      },      _type == "testimonialsSection" => {        _key,        _type,        heading,        subheading,        yearsExperience,        "testimonials": testimonials[]{          _key,          authorName,          text,          rating,        },      },      _type == "aboutSection" => {        _key,        _type,        heading,        body,        "photo": photo{ asset->, hotspot, crop },        photoAlt,      },      _type == "contactSection" => {        _key,        _type,        heading,        subheading,        formEnabled,      },    },  }
+// Query: *[_type == "page" && slug.current == "home"][0]{    _id,    _type,    name,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "heroSection" => {        _key,        _type,        eyebrow,        heading,        subheading,        ctaLabel,      },      _type == "servicesSection" => {        _key,        _type,        heading,        subheading,        "services": *[_type == "service" && defined(slug.current)]{          _id,          name,          "slug": slug.current,          category,          cardDescription,          displayOrder,        } | order(coalesce(displayOrder, 9999) asc, name asc),      },      _type == "testimonialsSection" => {        _key,        _type,        heading,        subheading,        yearsExperience,        "testimonials": testimonials[]{          _key,          authorName,          text,          rating,        },      },      _type == "aboutSection" => {        _key,        _type,        heading,        body,        "photo": photo{ asset->, hotspot, crop },        photoAlt,      },      _type == "contactSection" => {        _key,        _type,        heading,        subheading,        formEnabled,      },    },  }
 export type LandingPageQueryResult = {
   _id: string
   _type: 'page'
@@ -890,10 +909,12 @@ export type LandingPageQueryResult = {
         heading: string
         subheading: string | null
         services: Array<{
-          _key: string
+          _id: string
           name: string
+          slug: string
           category: 'czyszczenie' | 'montaze' | 'naprawy'
-          description: string | null
+          cardDescription: string | null
+          displayOrder: number | null
         }>
       }
     | {
@@ -914,7 +935,7 @@ export type LandingPageQueryResult = {
 
 // Source: sanity/lib/queries.ts
 // Variable: sitemapData
-// Query: *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
+// Query: *[(_type == "page" || _type == "post" || _type == "service") && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
 export type SitemapDataResult = Array<
   | {
       slug: string
@@ -926,7 +947,99 @@ export type SitemapDataResult = Array<
       _type: 'post'
       _updatedAt: string
     }
+  | {
+      slug: string
+      _type: 'service'
+      _updatedAt: string
+    }
 >
+
+// Source: sanity/lib/queries.ts
+// Variable: serviceSlugs
+// Query: *[_type == "service" && defined(slug.current)]  {"slug": slug.current}
+export type ServiceSlugsResult = Array<{
+  slug: string
+}>
+
+// Source: sanity/lib/queries.ts
+// Variable: serviceQuery
+// Query: *[_type == "service" && slug.current == $slug][0]{    _id,    name,    "slug": slug.current,    category,    cardDescription,    heroIntro,    "image": image{ asset->, hotspot, crop },    imageAlt,    priceFrom,    body[]{      ...,      markDefs[]{        ...,          _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }    },    faq[]{ _key, question, answer },    seoTitle,    seoDescription,  }
+export type ServiceQueryResult = {
+  _id: string
+  name: string
+  slug: string
+  category: 'czyszczenie' | 'montaze' | 'naprawy'
+  cardDescription: string | null
+  heroIntro: string | null
+  image: {
+    asset: {
+      _id: string
+      _type: 'sanity.imageAsset'
+      _createdAt: string
+      _updatedAt: string
+      _rev: string
+      originalFilename?: string
+      label?: string
+      title?: string
+      description?: string
+      altText?: string
+      sha1hash: string
+      extension: string
+      mimeType: string
+      size: number
+      assetId: string
+      uploadId?: string
+      path: string
+      url: string
+      metadata?: SanityImageMetadata
+      source?: SanityAssetSourceData
+    } | null
+    hotspot: SanityImageHotspot | null
+    crop: SanityImageCrop | null
+  } | null
+  imageAlt: string | null
+  priceFrom: string | null
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+        listItem?: 'bullet' | 'number'
+        markDefs: Array<{
+          linkType?: 'href' | 'page' | 'post'
+          href?: string
+          page: string | null
+          post: string | null
+          openInNewTab?: boolean
+          _type: 'link'
+          _key: string
+        }> | null
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: SanityImageAssetReference
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+        _key: string
+        markDefs: null
+      }
+  > | null
+  faq: Array<{
+    _key: string
+    question: string
+    answer: string
+  }> | null
+  seoTitle: string | null
+  seoDescription: string | null
+} | null
 
 // Source: sanity/lib/queries.ts
 // Variable: allPostsQuery
@@ -1077,8 +1190,10 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "settings"][0]': SettingsQueryResult
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
-    '\n  *[_type == "page" && slug.current == "home"][0]{\n    _id,\n    _type,\n    name,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "heroSection" => {\n        _key,\n        _type,\n        eyebrow,\n        heading,\n        subheading,\n        ctaLabel,\n      },\n      _type == "servicesSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        "services": services[]{\n          _key,\n          name,\n          category,\n          description,\n        },\n      },\n      _type == "testimonialsSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        yearsExperience,\n        "testimonials": testimonials[]{\n          _key,\n          authorName,\n          text,\n          rating,\n        },\n      },\n      _type == "aboutSection" => {\n        _key,\n        _type,\n        heading,\n        body,\n        "photo": photo{ asset->, hotspot, crop },\n        photoAlt,\n      },\n      _type == "contactSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        formEnabled,\n      },\n    },\n  }\n': LandingPageQueryResult
-    '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
+    '\n  *[_type == "page" && slug.current == "home"][0]{\n    _id,\n    _type,\n    name,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "heroSection" => {\n        _key,\n        _type,\n        eyebrow,\n        heading,\n        subheading,\n        ctaLabel,\n      },\n      _type == "servicesSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        "services": *[_type == "service" && defined(slug.current)]{\n          _id,\n          name,\n          "slug": slug.current,\n          category,\n          cardDescription,\n          displayOrder,\n        } | order(coalesce(displayOrder, 9999) asc, name asc),\n      },\n      _type == "testimonialsSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        yearsExperience,\n        "testimonials": testimonials[]{\n          _key,\n          authorName,\n          text,\n          rating,\n        },\n      },\n      _type == "aboutSection" => {\n        _key,\n        _type,\n        heading,\n        body,\n        "photo": photo{ asset->, hotspot, crop },\n        photoAlt,\n      },\n      _type == "contactSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        formEnabled,\n      },\n    },\n  }\n': LandingPageQueryResult
+    '\n  *[(_type == "page" || _type == "post" || _type == "service") && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
+    '\n  *[_type == "service" && defined(slug.current)]\n  {"slug": slug.current}\n': ServiceSlugsResult
+    '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    name,\n    "slug": slug.current,\n    category,\n    cardDescription,\n    heroIntro,\n    "image": image{ asset->, hotspot, crop },\n    imageAlt,\n    priceFrom,\n    body[]{\n      ...,\n      markDefs[]{\n        ...,\n        \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n    },\n    faq[]{ _key, question, answer },\n    seoTitle,\n    seoDescription,\n  }\n': ServiceQueryResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult
     '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
