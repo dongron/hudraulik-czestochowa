@@ -1784,7 +1784,7 @@
                 "type": "inline",
                 "name": "dayHours"
               },
-              "optional": true
+              "optional": false
             },
             "tuesday": {
               "type": "objectAttribute",
@@ -1792,7 +1792,7 @@
                 "type": "inline",
                 "name": "dayHours"
               },
-              "optional": true
+              "optional": false
             },
             "wednesday": {
               "type": "objectAttribute",
@@ -1800,7 +1800,7 @@
                 "type": "inline",
                 "name": "dayHours"
               },
-              "optional": true
+              "optional": false
             },
             "thursday": {
               "type": "objectAttribute",
@@ -1808,7 +1808,7 @@
                 "type": "inline",
                 "name": "dayHours"
               },
-              "optional": true
+              "optional": false
             },
             "friday": {
               "type": "objectAttribute",
@@ -1816,7 +1816,7 @@
                 "type": "inline",
                 "name": "dayHours"
               },
-              "optional": true
+              "optional": false
             },
             "saturday": {
               "type": "objectAttribute",
@@ -1824,7 +1824,7 @@
                 "type": "inline",
                 "name": "dayHours"
               },
-              "optional": true
+              "optional": false
             },
             "sunday": {
               "type": "objectAttribute",
@@ -1832,7 +1832,7 @@
                 "type": "inline",
                 "name": "dayHours"
               },
-              "optional": true
+              "optional": false
             }
           }
         },

@@ -22,7 +22,7 @@ Plan: [tasks/plan.md](plan.md) · Spec: [specs/006-opening-hours/spec.md](../spe
 - [x] T6 Deploy schema, seed hours + `websiteUrl` on published settings, rewrite 3 content claims (site description, hero subheading, O mnie), draft untouched (S) [each write approved]
   - Schema: `sanity schema deploy`. Content: one `sanity exec` transaction on published IDs with revision guards (tx `Xy29FT1JEEUfBqodS84RaB`); MCP patch was not used because it writes via `drafts.siteSettings`.
   - Verified: published values correct, no 24/7/weekend in published content, draft unchanged. Local dev render: JSON-LD + hours block correct.
-  - [ ] Visual check at 360px (headless screenshot hung on the live connection; check manually)
-  - [ ] Redeploy hosted Studio (`pnpm --filter studio deploy`) after merge so the owner can edit the hours
+  - [x] Visual check at 360px (checked manually by owner on a phone, 2026-09-29)
+  - [ ] Redeploy hosted Studio (`pnpm deploy:studio`) after merge so the owner can edit the hours
 - [ ] T7 Live verification: Rich Results Test 0 errors, 7/7 days match Google profile, owner hand-off of profile steps + settings draft warning (XS)
 - [ ] Checkpoint: all FRs covered, ready for `/code-review`

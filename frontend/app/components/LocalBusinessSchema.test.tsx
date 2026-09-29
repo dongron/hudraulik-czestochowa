@@ -77,6 +77,16 @@ describe('LocalBusinessSchema', () => {
     expect(data.hasMap).toBe('https://share.google/iTFr7fdAX5pKqkf48')
   })
 
+  it('escapes "<" so content cannot close the script tag', () => {
+    const {container} = render(
+      <LocalBusinessSchema settings={settingsWith({title: 'Hydraulik</script><script>x()'})} />,
+    )
+    const script = container.querySelector('script[type="application/ld+json"]')
+
+    expect(script?.innerHTML).not.toContain('</script>')
+    expect(JSON.parse(script?.textContent ?? 'null').name).toBe('Hydraulik</script><script>x()')
+  })
+
   it('never falls back to the Maps link as the website', () => {
     const data = renderJsonLd(settingsWith({websiteUrl: undefined}))
 

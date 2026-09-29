@@ -276,13 +276,13 @@ export type Settings = {
   websiteUrl: string
   emergencyAvailable: boolean
   openingHours?: {
-    monday?: DayHours
-    tuesday?: DayHours
-    wednesday?: DayHours
-    thursday?: DayHours
-    friday?: DayHours
-    saturday?: DayHours
-    sunday?: DayHours
+    monday: DayHours
+    tuesday: DayHours
+    wednesday: DayHours
+    thursday: DayHours
+    friday: DayHours
+    saturday: DayHours
+    sunday: DayHours
   }
   ogImage?: {
     asset?: SanityImageAssetReference
@@ -700,13 +700,13 @@ export type SettingsQueryResult = {
   websiteUrl: string
   emergencyAvailable: boolean
   openingHours?: {
-    monday?: DayHours
-    tuesday?: DayHours
-    wednesday?: DayHours
-    thursday?: DayHours
-    friday?: DayHours
-    saturday?: DayHours
-    sunday?: DayHours
+    monday: DayHours
+    tuesday: DayHours
+    wednesday: DayHours
+    thursday: DayHours
+    friday: DayHours
+    saturday: DayHours
+    sunday: DayHours
   }
   ogImage?: {
     asset?: SanityImageAssetReference

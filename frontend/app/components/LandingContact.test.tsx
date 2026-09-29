@@ -113,14 +113,13 @@ describe('LandingContact opening hours', () => {
   }
 
   it('lists every day with its hours as day/hours pairs', () => {
-    const {getByRole} = render(
+    const {getByRole, getAllByRole} = render(
       <LandingContact block={contactBlock} settings={settingsWith({openingHours: profileHours})} />,
     )
 
-    const list = getByRole('heading', {name: 'Godziny otwarcia'}).nextElementSibling
-    expect(list?.tagName).toBe('DL')
-    const days = [...(list?.querySelectorAll('dt') ?? [])].map((dt) => dt.textContent)
-    const hours = [...(list?.querySelectorAll('dd') ?? [])].map((dd) => dd.textContent)
+    expect(getByRole('heading', {name: 'Godziny otwarcia'})).toBeTruthy()
+    const days = getAllByRole('term').map((dt) => dt.textContent)
+    const hours = getAllByRole('definition').map((dd) => dd.textContent)
     expect(days).toEqual([
       'Poniedziałek',
       'Wtorek',

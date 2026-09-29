@@ -52,6 +52,7 @@ export const dayHours = defineType({
     defineField({
       name: 'closes',
       title: 'Closes',
+      description: 'For "until midnight" use 23:59.',
       type: 'string',
       placeholder: '16:00',
       hidden: ({parent}) => parent?.mode !== 'hours',

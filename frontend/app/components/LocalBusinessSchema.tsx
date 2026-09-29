@@ -30,7 +30,9 @@ export default function LocalBusinessSchema({settings}: Props) {
     'openingHoursSpecification': toOpeningHoursSpecification(settings.openingHours),
   }
 
-  return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify(data)}} />
-  )
+  // JSON.stringify does not escape "<", so a CMS value containing "</script>" could
+  // break out of the tag. The escaped form "\u003c" parses back to "<".
+  const json = JSON.stringify(data).replace(/</g, '\\u003c')
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{__html: json}} />
 }
