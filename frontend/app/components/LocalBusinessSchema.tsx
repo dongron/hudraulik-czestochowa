@@ -1,3 +1,4 @@
+import {toOpeningHoursSpecification} from '@/app/lib/openingHours'
 import type {SettingsQueryResult} from '@/sanity.types'
 
 type Props = {
@@ -22,23 +23,11 @@ export default function LocalBusinessSchema({settings}: Props) {
         }
       : undefined,
     'areaServed': settings.address?.city,
-    'url': settings.googleMapsUrl,
-    'openingHoursSpecification': settings.emergencyAvailable
-      ? {
-          '@type': 'OpeningHoursSpecification',
-          'dayOfWeek': [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday',
-          ],
-          'opens': '00:00',
-          'closes': '23:59',
-        }
-      : undefined,
+    // The site itself is the business website; the Maps link identifies the same
+    // business on Google. Both help Google tie this page to the Business Profile.
+    'url': settings.websiteUrl || undefined,
+    'hasMap': settings.googleMapsUrl || undefined,
+    'openingHoursSpecification': toOpeningHoursSpecification(settings.openingHours),
   }
 
   return (

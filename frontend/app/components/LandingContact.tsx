@@ -1,10 +1,11 @@
 'use client'
 
-import {Suspense, useActionState, useEffect} from 'react'
+import {Fragment, Suspense, useActionState, useEffect} from 'react'
 import {useSearchParams} from 'next/navigation'
 
 import {submitContactForm, type ContactFormState} from '@/app/landing-actions'
 import {trackEvent} from '@/app/lib/analytics'
+import {toDisplayRows} from '@/app/lib/openingHours'
 import type {LandingPageQueryResult, SettingsQueryResult} from '@/sanity.types'
 
 type ContactBlock = Extract<
@@ -135,6 +136,7 @@ export default function LandingContact({block, settings}: Props) {
   const phoneHref = phone ? `tel:${phone.replace(/\s+/g, '')}` : undefined
   const address = settings?.address
   const mapsUrl = settings?.googleMapsUrl
+  const openingRows = toDisplayRows(settings?.openingHours)
 
   return (
     <section id="kontakt" className="py-16 md:py-24 bg-gray-50">
@@ -198,11 +200,29 @@ export default function LandingContact({block, settings}: Props) {
               </div>
             )}
 
+            {openingRows.length > 0 && (
+              <div>
+                <h4 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">
+                  Godziny otwarcia
+                </h4>
+                <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-gray-700">
+                  {openingRows.map(({day, hours}) => (
+                    <Fragment key={day}>
+                      <dt>{day}</dt>
+                      <dd className="font-medium">{hours}</dd>
+                    </Fragment>
+                  ))}
+                </dl>
+              </div>
+            )}
+
             {settings?.emergencyAvailable && (
               <div className="rounded-lg bg-red-50 border border-red-200 p-4">
-                <p className="font-semibold text-red-700">Pogotowie hydrauliczne 24/7</p>
+                <p className="font-semibold text-red-700">
+                  Pogotowie hydrauliczne całą dobę od poniedziałku do soboty
+                </p>
                 <p className="text-sm text-red-600 mt-1">
-                  Dostępny w nocy i w weekendy w pilnych przypadkach.
+                  Dostępny także w nocy w pilnych przypadkach.
                 </p>
               </div>
             )}

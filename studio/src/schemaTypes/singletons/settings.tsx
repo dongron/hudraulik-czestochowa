@@ -155,11 +155,47 @@ export const settings = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'websiteUrl',
+      title: 'Website URL',
+      description:
+        'Public address of this site, e.g. https://hydraulik-czestochowa-24.pl/. Must match the website set in the Google Business Profile.',
+      type: 'url',
+      validation: (rule) => rule.required().uri({scheme: ['https']}),
+    }),
+    defineField({
       name: 'emergencyAvailable',
-      title: 'Emergency available (nights & weekends)',
+      title: 'Emergency available (nights, Mon–Sat)',
+      description:
+        'Shows the emergency badge and note. Their wording assumes Mon–Sat round-the-clock service; update it if the opening hours change.',
       type: 'boolean',
       initialValue: true,
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'openingHours',
+      title: 'Opening hours',
+      description:
+        'Shown in the contact section and published to search engines. Keep identical to the Google Business Profile.',
+      type: 'object',
+      options: {collapsible: true, collapsed: false},
+      initialValue: {
+        monday: {mode: 'open24'},
+        tuesday: {mode: 'open24'},
+        wednesday: {mode: 'open24'},
+        thursday: {mode: 'open24'},
+        friday: {mode: 'open24'},
+        saturday: {mode: 'open24'},
+        sunday: {mode: 'closed'},
+      },
+      fields: [
+        defineField({name: 'monday', title: 'Poniedziałek', type: 'dayHours'}),
+        defineField({name: 'tuesday', title: 'Wtorek', type: 'dayHours'}),
+        defineField({name: 'wednesday', title: 'Środa', type: 'dayHours'}),
+        defineField({name: 'thursday', title: 'Czwartek', type: 'dayHours'}),
+        defineField({name: 'friday', title: 'Piątek', type: 'dayHours'}),
+        defineField({name: 'saturday', title: 'Sobota', type: 'dayHours'}),
+        defineField({name: 'sunday', title: 'Niedziela', type: 'dayHours'}),
+      ],
     }),
     defineField({
       name: 'ogImage',

@@ -81,3 +81,84 @@ describe('LandingContact generate_lead tracking', () => {
     expect(gtag).not.toHaveBeenCalled()
   })
 })
+
+describe('LandingContact opening hours', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  const contactBlock = {
+    _type: 'contactSection',
+    _key: 'contact',
+    heading: 'Kontakt',
+    subheading: null,
+    formEnabled: false,
+  } as unknown as ComponentProps<typeof LandingContact>['block']
+
+  const settingsWith = (overrides: Record<string, unknown>) =>
+    ({
+      phone: '+48 518 893 308',
+      emergencyAvailable: true,
+      ...overrides,
+    }) as unknown as ComponentProps<typeof LandingContact>['settings']
+
+  const profileHours = {
+    monday: {_type: 'dayHours', mode: 'open24'},
+    tuesday: {_type: 'dayHours', mode: 'open24'},
+    wednesday: {_type: 'dayHours', mode: 'open24'},
+    thursday: {_type: 'dayHours', mode: 'open24'},
+    friday: {_type: 'dayHours', mode: 'open24'},
+    saturday: {_type: 'dayHours', mode: 'open24'},
+    sunday: {_type: 'dayHours', mode: 'closed'},
+  }
+
+  it('lists every day with its hours as day/hours pairs', () => {
+    const {getByRole} = render(
+      <LandingContact block={contactBlock} settings={settingsWith({openingHours: profileHours})} />,
+    )
+
+    const list = getByRole('heading', {name: 'Godziny otwarcia'}).nextElementSibling
+    expect(list?.tagName).toBe('DL')
+    const days = [...(list?.querySelectorAll('dt') ?? [])].map((dt) => dt.textContent)
+    const hours = [...(list?.querySelectorAll('dd') ?? [])].map((dd) => dd.textContent)
+    expect(days).toEqual([
+      'Poniedziałek',
+      'Wtorek',
+      'Środa',
+      'Czwartek',
+      'Piątek',
+      'Sobota',
+      'Niedziela',
+    ])
+    expect(hours).toEqual([...Array(6).fill('Otwarte całą dobę'), 'Nieczynne'])
+  })
+
+  it('hides the block when no hours are set', () => {
+    const {queryByRole} = render(
+      <LandingContact block={contactBlock} settings={settingsWith({openingHours: undefined})} />,
+    )
+
+    expect(queryByRole('heading', {name: 'Godziny otwarcia'})).toBeNull()
+  })
+
+  it('shows the hours even when emergency service is switched off', () => {
+    const {getByRole} = render(
+      <LandingContact
+        block={contactBlock}
+        settings={settingsWith({openingHours: profileHours, emergencyAvailable: false})}
+      />,
+    )
+
+    expect(getByRole('heading', {name: 'Godziny otwarcia'})).toBeTruthy()
+  })
+
+  it('describes emergency service as Mon–Sat without 24/7 or weekend claims', () => {
+    const {container} = render(
+      <LandingContact block={contactBlock} settings={settingsWith({openingHours: profileHours})} />,
+    )
+
+    const text = container.textContent ?? ''
+    expect(text).toContain('całą dobę od poniedziałku do soboty')
+    expect(text).not.toMatch(/24\/7|weekend/i)
+  })
+})

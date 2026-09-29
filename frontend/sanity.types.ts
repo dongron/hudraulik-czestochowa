@@ -15,6 +15,13 @@
 export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: ../sanity.schema.json
+export type DayHours = {
+  _type: 'dayHours'
+  mode: 'open24' | 'closed' | 'hours'
+  opens?: string
+  closes?: string
+}
+
 export type ContactSection = {
   _type: 'contactSection'
   heading: string
@@ -266,7 +273,17 @@ export type Settings = {
     postalCode: string
   }
   googleMapsUrl: string
+  websiteUrl: string
   emergencyAvailable: boolean
+  openingHours?: {
+    monday?: DayHours
+    tuesday?: DayHours
+    wednesday?: DayHours
+    thursday?: DayHours
+    friday?: DayHours
+    saturday?: DayHours
+    sunday?: DayHours
+  }
   ogImage?: {
     asset?: SanityImageAssetReference
     media?: unknown
@@ -595,6 +612,7 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | DayHours
   | ContactSection
   | SanityImageAssetReference
   | AboutSection
@@ -679,7 +697,17 @@ export type SettingsQueryResult = {
     postalCode: string
   }
   googleMapsUrl: string
+  websiteUrl: string
   emergencyAvailable: boolean
+  openingHours?: {
+    monday?: DayHours
+    tuesday?: DayHours
+    wednesday?: DayHours
+    thursday?: DayHours
+    friday?: DayHours
+    saturday?: DayHours
+    sunday?: DayHours
+  }
   ogImage?: {
     asset?: SanityImageAssetReference
     media?: unknown

@@ -1,5 +1,56 @@
 [
   {
+    "name": "dayHours",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "dayHours"
+          }
+        },
+        "mode": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "open24"
+              },
+              {
+                "type": "string",
+                "value": "closed"
+              },
+              {
+                "type": "string",
+                "value": "hours"
+              }
+            ]
+          },
+          "optional": false
+        },
+        "opens": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "closes": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "contactSection",
     "type": "type",
     "value": {
@@ -1708,12 +1759,84 @@
         },
         "optional": false
       },
+      "websiteUrl": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "emergencyAvailable": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
         "optional": false
+      },
+      "openingHours": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "monday": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "dayHours"
+              },
+              "optional": true
+            },
+            "tuesday": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "dayHours"
+              },
+              "optional": true
+            },
+            "wednesday": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "dayHours"
+              },
+              "optional": true
+            },
+            "thursday": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "dayHours"
+              },
+              "optional": true
+            },
+            "friday": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "dayHours"
+              },
+              "optional": true
+            },
+            "saturday": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "dayHours"
+              },
+              "optional": true
+            },
+            "sunday": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "dayHours"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
       },
       "ogImage": {
         "type": "objectAttribute",

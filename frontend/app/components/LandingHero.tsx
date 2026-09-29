@@ -52,7 +52,7 @@ export default function LandingHero({block, settings}: Props) {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
               </span>
-              Pogotowie 24/7 — noce i weekendy
+              Pogotowie całą dobę, pon–sob
             </div>
           )}
 
