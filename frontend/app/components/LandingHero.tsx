@@ -16,11 +16,12 @@ export default function LandingHero({block, settings}: Props) {
   const phone = settings?.phone
   const phoneHref = phone ? `tel:${phone.replace(/\s+/g, '')}` : undefined
   const emergency = settings?.emergencyAvailable
+  const HeadingTag = block.eyebrow ? 'p' : 'h1'
 
   return (
     <section id="top" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
       <Image
-        src="/images/hero-bg.png"
+        src="/images/hero-bg.webp"
         alt="Klucz hydrauliczny i przeciekająca rura"
         fill
         priority
@@ -30,15 +31,16 @@ export default function LandingHero({block, settings}: Props) {
       <div className="absolute inset-0 bg-white/80 md:bg-white/70" />
       <div className="container relative mx-auto px-4">
         <div className="mx-auto max-w-4xl text-center">
+          {/* The eyebrow is the page's h1 (spec 007, D2); tags swap, styles stay the same. */}
           {block.eyebrow && (
-            <p className="text-sm md:text-base font-semibold uppercase tracking-wider text-blue-600 mb-4">
+            <h1 className="text-sm md:text-base font-semibold uppercase tracking-wider text-blue-600 mb-4">
               {block.eyebrow}
-            </p>
+            </h1>
           )}
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-6">
+          <HeadingTag className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-6">
             {block.heading}
-          </h1>
+          </HeadingTag>
 
           {block.subheading && (
             <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl mx-auto">

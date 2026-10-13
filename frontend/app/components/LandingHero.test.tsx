@@ -40,3 +40,47 @@ describe('LandingHero emergency badge', () => {
     expect(container.textContent).not.toContain('Pogotowie')
   })
 })
+
+describe('LandingHero background image', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  // Cloudflare serves /_next/image originals as-is, so the source file itself must be light.
+  it('uses the WebP hero image', () => {
+    const {container} = render(<LandingHero block={heroBlock} settings={settingsWith({})} />)
+
+    const src = decodeURIComponent(container.querySelector('img')?.getAttribute('src') ?? '')
+    expect(src).toContain('/images/hero-bg.webp')
+  })
+})
+
+describe('LandingHero headings', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
+  it('renders the eyebrow as the only h1', () => {
+    const block = {...heroBlock, eyebrow: 'Hydraulik Częstochowa'} as typeof heroBlock
+
+    const {container} = render(<LandingHero block={block} settings={settingsWith({})} />)
+
+    const h1s = [...container.querySelectorAll('h1')].map((h) => h.textContent)
+    expect(h1s).toEqual(['Hydraulik Częstochowa'])
+  })
+
+  it('still shows the heading text, outside the h1', () => {
+    const block = {...heroBlock, eyebrow: 'Hydraulik Częstochowa'} as typeof heroBlock
+
+    const {container} = render(<LandingHero block={block} settings={settingsWith({})} />)
+
+    expect(container.textContent).toContain('Profesjonalne usługi hydrauliczne')
+  })
+
+  it('falls back to the heading as h1 when there is no eyebrow', () => {
+    const {container} = render(<LandingHero block={heroBlock} settings={settingsWith({})} />)
+
+    const h1s = [...container.querySelectorAll('h1')].map((h) => h.textContent)
+    expect(h1s).toEqual(['Profesjonalne usługi hydrauliczne'])
+  })
+})

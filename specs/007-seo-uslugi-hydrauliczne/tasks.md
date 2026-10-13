@@ -91,7 +91,7 @@ Depends on: Part 1.
 - [x] **T4.2** `frontend/app/sitemap.ts`: skip `post` entries (XS)
   - **Done when:** T4.1 passes.
 - [x] **T4.3** Gate
-- [ ] **T4.4** On approval, Sanity: unpublish "Why Sanity Wins Over Traditional CMSes" via the Sanity MCP (it remains as a draft)
+- [x] **T4.4** On approval, Sanity: unpublish "Why Sanity Wins Over Traditional CMSes" via the Sanity MCP (it remains as a draft)
   - **Done when:** `http://localhost:3000/posts/why-sanity-wins-over-traditional-cmses` returns 404 and Studio shows the post as unpublished.
 
 > **Checkpoint 4:** spec Part 4 "How to test" → commit `fix(seo): hide posts from sitemap` → deploy → O2 again (resubmit sitemap).
@@ -102,12 +102,12 @@ Depends on: Part 1.
 
 Depends on: none. Before starting, Dominik notes the current PageSpeed Insights mobile LCP.
 
-- [ ] **T5.1** Create `frontend/public/images/hero-bg.webp` with `cwebp -q 78 -m 6` from `hero-bg.png`; keep the PNG (XS)
+- [x] **T5.1** Create `frontend/public/images/hero-bg.webp` with `cwebp -q 78 -m 6` from `hero-bg.png`; keep the PNG (XS)
   - **Done when:** WebP is at most 100 KB and 1584×672.
   - **Verify:** `ls -l frontend/public/images/hero-bg.webp && sips -g pixelWidth -g pixelHeight frontend/public/images/hero-bg.webp`
-- [ ] **T5.2** `frontend/app/components/LandingHero.tsx`: `src="/images/hero-bg.webp"` (XS)
+- [x] **T5.2** `frontend/app/components/LandingHero.tsx`: `src="/images/hero-bg.webp"` (XS)
   - **Done when:** existing `LandingHero.test.tsx` passes; in `pnpm --filter frontend preview` the hero request is `hero-bg.webp`.
-- [ ] **T5.3** Gate
+- [x] **T5.3** Gate
 
 > **Checkpoint 5:** spec Part 5 "How to test" → approve → commit `perf(frontend): serve hero image as WebP` → deploy → compare LCP.
 
@@ -117,14 +117,14 @@ Depends on: none. Before starting, Dominik notes the current PageSpeed Insights 
 
 Depends on: Part 5 (same component).
 
-- [ ] **T6.1** Extend `frontend/app/components/LandingHero.test.tsx` (XS)
+- [x] **T6.1** Extend `frontend/app/components/LandingHero.test.tsx` (XS)
   - Cases: exactly one `<h1>` and it contains the `eyebrow` text; `heading` is still rendered, not as `<h1>`; with an empty `eyebrow`, `heading` is the `<h1>`.
   - **Done when:** the cases fail against the current markup.
-- [ ] **T6.2** `frontend/app/components/LandingHero.tsx`: render `eyebrow` as `<h1>` with the current `<p>` classes and `heading` as `<p>` with the current `<h1>` classes; fallback when `eyebrow` is empty (XS)
+- [x] **T6.2** `frontend/app/components/LandingHero.tsx`: render `eyebrow` as `<h1>` with the current `<p>` classes and `heading` as `<p>` with the current `<h1>` classes; fallback when `eyebrow` is empty (XS)
   - **Done when:** T6.1 passes; the hero looks the same at mobile and desktop widths.
-- [ ] **T6.3** Sanity draft: home page hero `subheading` → "Usługi hydrauliczne w Częstochowie: 10 lat doświadczenia. Naprawy, montaże i czyszczenie. Pogotowie hydrauliczne całą dobę, pon–sob."
+- [x] **T6.3** Sanity draft: home page hero `subheading` → "Usługi hydrauliczne w Częstochowie: 10 lat doświadczenia. Naprawy, montaże i czyszczenie. Pogotowie hydrauliczne całą dobę, pon–sob."
   - **Done when:** Studio → Presentation shows the new intro; the published page is unchanged.
-- [ ] **T6.4** Gate
+- [x] **T6.4** Gate
 
 > **Checkpoint 6:** spec Part 6 "How to test" → approve → publish the draft → commit `feat(frontend): make eyebrow the page H1` → deploy.
 
