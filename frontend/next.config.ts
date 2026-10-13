@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [new URL('https://cdn.sanity.io/**')],
   },
+  async redirects() {
+    return [
+      // The "home" page document is rendered at the site root, so /home would duplicate it.
+      {source: '/home', destination: '/', permanent: true},
+    ]
+  },
 }
 
 export default nextConfig

@@ -1,7 +1,7 @@
 import {MetadataRoute} from 'next'
+import {SITE_URL} from '@/app/lib/site'
 import {sanityFetch} from '@/sanity/lib/live'
 import {sitemapData} from '@/sanity/lib/queries'
-import {headers} from 'next/headers'
 
 /**
  * This file creates a sitemap (sitemap.xml) for the application. Learn more about sitemaps in Next.js here: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
@@ -12,11 +12,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const allPostsAndPages = await sanityFetch({
     query: sitemapData,
   })
-  const headersList = await headers()
   const sitemap: MetadataRoute.Sitemap = []
-  const domain: string = headersList.get('host') as string
   sitemap.push({
-    url: domain as string,
+    url: SITE_URL,
     lastModified: new Date(),
     priority: 1,
     changeFrequency: 'monthly',
@@ -36,21 +34,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     let url: string
 
     for (const p of allPostsAndPages.data) {
+      // The "home" page document is rendered at the site root, which is already listed.
+      if (p._type === 'page' && p.slug === 'home') continue
+      // Posts are hidden: the site has no blog (spec 007, D3).
+      if (p._type === 'post') continue
+
       switch (p._type) {
         case 'page':
           priority = 0.8
           changeFrequency = 'monthly'
-          url = `${domain}/${p.slug}`
-          break
-        case 'post':
-          priority = 0.5
-          changeFrequency = 'never'
-          url = `${domain}/posts/${p.slug}`
+          url = `${SITE_URL}/${p.slug}`
           break
         case 'service':
           priority = 0.7
           changeFrequency = 'monthly'
-          url = `${domain}/uslugi/${p.slug}`
+          url = `${SITE_URL}/uslugi/${p.slug}`
           break
       }
       sitemap.push({

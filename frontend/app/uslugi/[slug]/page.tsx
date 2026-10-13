@@ -43,6 +43,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   return {
     title,
     description,
+    alternates: {canonical: `/uslugi/${params.slug}`},
   } satisfies Metadata
 }
 

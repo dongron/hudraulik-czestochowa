@@ -1,3 +1,4 @@
+import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
 import LandingAbout from '@/app/components/LandingAbout'
@@ -8,6 +9,10 @@ import LandingTestimonials from '@/app/components/LandingTestimonials'
 import LocalBusinessSchema from '@/app/components/LocalBusinessSchema'
 import {sanityFetch} from '@/sanity/lib/live'
 import {landingPageQuery, settingsQuery} from '@/sanity/lib/queries'
+
+export const metadata: Metadata = {
+  alternates: {canonical: '/'},
+}
 
 export default async function Page() {
   const [{data: page}, {data: settings}] = await Promise.all([

@@ -51,6 +51,7 @@ export async function generateMetadata(props: Props, parent: ResolvingMetadata):
         : [],
     title: post?.title,
     description: post?.excerpt,
+    alternates: {canonical: `/posts/${params.slug}`},
     openGraph: {
       images: ogImage ? [ogImage, ...previousImages] : previousImages,
     },

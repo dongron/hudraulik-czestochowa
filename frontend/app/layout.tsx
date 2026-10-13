@@ -13,6 +13,7 @@ import DraftModeToast from '@/app/components/DraftModeToast'
 import GoogleAnalytics from '@/app/components/GoogleAnalytics'
 import SiteFooter from '@/app/components/SiteFooter'
 import SiteHeader from '@/app/components/SiteHeader'
+import {SITE_URL} from '@/app/lib/site'
 import * as demo from '@/sanity/lib/demo'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
 import {settingsQuery} from '@/sanity/lib/queries'
@@ -33,16 +34,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = settings?.description || demo.description
 
   const ogImage = resolveOpenGraphImage(settings?.ogImage)
-  let metadataBase: URL | undefined = undefined
-  try {
-    metadataBase = settings?.ogImage?.metadataBase
-      ? new URL(settings.ogImage.metadataBase)
-      : undefined
-  } catch {
-    // ignore
-  }
   return {
-    metadataBase,
+    // Pages declare relative canonical URLs; this makes them absolute on the production domain.
+    metadataBase: new URL(SITE_URL),
     title: {
       template: `%s | ${title}`,
       default: title,
