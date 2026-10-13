@@ -203,6 +203,36 @@
     }
   },
   {
+    "type": "type",
+    "name": "googleReview.reference",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_ref": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          }
+        },
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "reference"
+          }
+        },
+        "_weak": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        }
+      },
+      "dereferencesTo": "googleReview"
+    }
+  },
+  {
     "name": "testimonialsSection",
     "type": "type",
     "value": {
@@ -235,6 +265,42 @@
             "type": "number"
           },
           "optional": false
+        },
+        "reviews": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "googleReview.reference"
+              }
+            }
+          },
+          "optional": true
+        },
+        "sourceNote": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "sourceLinkLabel": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
         },
         "testimonials": {
           "type": "objectAttribute",
@@ -285,7 +351,7 @@
               }
             }
           },
-          "optional": false
+          "optional": true
         }
       }
     }

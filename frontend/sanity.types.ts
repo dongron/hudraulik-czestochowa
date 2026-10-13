@@ -50,12 +50,26 @@ export type AboutSection = {
   photoAlt?: string
 }
 
+export type GoogleReviewReference = {
+  _ref: string
+  _type: 'reference'
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: 'googleReview'
+}
+
 export type TestimonialsSection = {
   _type: 'testimonialsSection'
   heading: string
   subheading?: string
   yearsExperience: number
-  testimonials: Array<{
+  reviews?: Array<
+    {
+      _key: string
+    } & GoogleReviewReference
+  >
+  sourceNote?: string
+  sourceLinkLabel?: string
+  testimonials?: Array<{
     authorName: string
     text: string
     rating: number
@@ -629,6 +643,7 @@ export type AllSanitySchemaTypes =
   | ContactSection
   | SanityImageAssetReference
   | AboutSection
+  | GoogleReviewReference
   | TestimonialsSection
   | ServicesSection
   | HeroSection
@@ -852,7 +867,14 @@ export type GetPageQueryResult = {
         heading: string
         subheading?: string
         yearsExperience: number
-        testimonials: Array<{
+        reviews?: Array<
+          {
+            _key: string
+          } & GoogleReviewReference
+        >
+        sourceNote?: string
+        sourceLinkLabel?: string
+        testimonials?: Array<{
           authorName: string
           text: string
           rating: number
@@ -865,7 +887,7 @@ export type GetPageQueryResult = {
 
 // Source: sanity/lib/queries.ts
 // Variable: landingPageQuery
-// Query: *[_type == "page" && slug.current == "home"][0]{    _id,    _type,    name,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "heroSection" => {        _key,        _type,        eyebrow,        heading,        subheading,        ctaLabel,      },      _type == "servicesSection" => {        _key,        _type,        heading,        subheading,        "services": *[_type == "service" && defined(slug.current)]{          _id,          name,          "slug": slug.current,          category,          cardDescription,          displayOrder,        } | order(coalesce(displayOrder, 9999) asc, name asc),      },      _type == "testimonialsSection" => {        _key,        _type,        heading,        subheading,        yearsExperience,        "testimonials": testimonials[]{          _key,          authorName,          text,          rating,        },      },      _type == "aboutSection" => {        _key,        _type,        heading,        body,        "photo": photo{ asset->, hotspot, crop },        photoAlt,      },      _type == "contactSection" => {        _key,        _type,        heading,        subheading,        formEnabled,      },    },  }
+// Query: *[_type == "page" && slug.current == "home"][0]{    _id,    _type,    name,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "heroSection" => {        _key,        _type,        eyebrow,        heading,        subheading,        ctaLabel,      },      _type == "servicesSection" => {        _key,        _type,        heading,        subheading,        "services": *[_type == "service" && defined(slug.current)]{          _id,          name,          "slug": slug.current,          category,          cardDescription,          displayOrder,        } | order(coalesce(displayOrder, 9999) asc, name asc),      },      _type == "testimonialsSection" => {        _key,        _type,        heading,        subheading,        yearsExperience,        "reviews": reviews[]->{          _id,          authorName,          text,          rating,        },        sourceNote,        sourceLinkLabel,        "testimonials": testimonials[]{          _key,          authorName,          text,          rating,        },      },      _type == "aboutSection" => {        _key,        _type,        heading,        body,        "photo": photo{ asset->, hotspot, crop },        photoAlt,      },      _type == "contactSection" => {        _key,        _type,        heading,        subheading,        formEnabled,      },    },  }
 export type LandingPageQueryResult = {
   _id: string
   _type: 'page'
@@ -965,12 +987,20 @@ export type LandingPageQueryResult = {
         heading: string
         subheading: string | null
         yearsExperience: number
+        reviews: Array<{
+          _id: string
+          authorName: string
+          text: string
+          rating: number
+        }> | null
+        sourceNote: string | null
+        sourceLinkLabel: string | null
         testimonials: Array<{
           _key: string
           authorName: string
           text: string
           rating: number
-        }>
+        }> | null
       }
   > | null
 } | null
@@ -1232,7 +1262,7 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "settings"][0]': SettingsQueryResult
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
-    '\n  *[_type == "page" && slug.current == "home"][0]{\n    _id,\n    _type,\n    name,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "heroSection" => {\n        _key,\n        _type,\n        eyebrow,\n        heading,\n        subheading,\n        ctaLabel,\n      },\n      _type == "servicesSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        "services": *[_type == "service" && defined(slug.current)]{\n          _id,\n          name,\n          "slug": slug.current,\n          category,\n          cardDescription,\n          displayOrder,\n        } | order(coalesce(displayOrder, 9999) asc, name asc),\n      },\n      _type == "testimonialsSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        yearsExperience,\n        "testimonials": testimonials[]{\n          _key,\n          authorName,\n          text,\n          rating,\n        },\n      },\n      _type == "aboutSection" => {\n        _key,\n        _type,\n        heading,\n        body,\n        "photo": photo{ asset->, hotspot, crop },\n        photoAlt,\n      },\n      _type == "contactSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        formEnabled,\n      },\n    },\n  }\n': LandingPageQueryResult
+    '\n  *[_type == "page" && slug.current == "home"][0]{\n    _id,\n    _type,\n    name,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "heroSection" => {\n        _key,\n        _type,\n        eyebrow,\n        heading,\n        subheading,\n        ctaLabel,\n      },\n      _type == "servicesSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        "services": *[_type == "service" && defined(slug.current)]{\n          _id,\n          name,\n          "slug": slug.current,\n          category,\n          cardDescription,\n          displayOrder,\n        } | order(coalesce(displayOrder, 9999) asc, name asc),\n      },\n      _type == "testimonialsSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        yearsExperience,\n        "reviews": reviews[]->{\n          _id,\n          authorName,\n          text,\n          rating,\n        },\n        sourceNote,\n        sourceLinkLabel,\n        "testimonials": testimonials[]{\n          _key,\n          authorName,\n          text,\n          rating,\n        },\n      },\n      _type == "aboutSection" => {\n        _key,\n        _type,\n        heading,\n        body,\n        "photo": photo{ asset->, hotspot, crop },\n        photoAlt,\n      },\n      _type == "contactSection" => {\n        _key,\n        _type,\n        heading,\n        subheading,\n        formEnabled,\n      },\n    },\n  }\n': LandingPageQueryResult
     '\n  *[(_type == "page" || _type == "post" || _type == "service") && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "service" && defined(slug.current)]\n  {"slug": slug.current}\n': ServiceSlugsResult
     '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    name,\n    "slug": slug.current,\n    category,\n    cardDescription,\n    heroIntro,\n    "image": image{ asset->, hotspot, crop },\n    imageAlt,\n    priceFrom,\n    body[]{\n      ...,\n      markDefs[]{\n        ...,\n        \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n    },\n    faq[]{ _key, question, answer },\n    seoTitle,\n    seoDescription,\n  }\n': ServiceQueryResult

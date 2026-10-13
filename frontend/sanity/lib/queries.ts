@@ -94,6 +94,14 @@ export const landingPageQuery = defineQuery(`
         heading,
         subheading,
         yearsExperience,
+        "reviews": reviews[]->{
+          _id,
+          authorName,
+          text,
+          rating,
+        },
+        sourceNote,
+        sourceLinkLabel,
         "testimonials": testimonials[]{
           _key,
           authorName,

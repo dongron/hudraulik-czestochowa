@@ -34,7 +34,7 @@ export default async function Page() {
           case 'servicesSection':
             return <LandingServices key={block._key} block={block} />
           case 'testimonialsSection':
-            return <LandingTestimonials key={block._key} block={block} />
+            return <LandingTestimonials key={block._key} block={block} settings={settings} />
           case 'aboutSection':
             return <LandingAbout key={block._key} block={block} />
           case 'contactSection':

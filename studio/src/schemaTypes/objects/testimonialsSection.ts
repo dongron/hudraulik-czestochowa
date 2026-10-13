@@ -25,10 +25,31 @@ export const testimonialsSection = defineType({
       validation: (Rule) => Rule.required().min(0),
     }),
     defineField({
-      name: 'testimonials',
-      title: 'Testimonials',
+      name: 'reviews',
+      title: 'Google reviews',
+      description: 'Reviews shown on the page, in this order.',
       type: 'array',
-      validation: (Rule) => Rule.required().min(1),
+      of: [defineArrayMember({type: 'reference', to: [{type: 'googleReview'}]})],
+      validation: (Rule) => Rule.unique(),
+    }),
+    defineField({
+      name: 'sourceNote',
+      title: 'Source note',
+      description: 'Shown under the reviews, e.g. "Opinie klientów z naszej wizytówki Google."',
+      type: 'string',
+    }),
+    defineField({
+      name: 'sourceLinkLabel',
+      title: 'Source link label',
+      description: 'Link to the Google profile (Settings → Google Maps URL).',
+      type: 'string',
+    }),
+    // Replaced by `reviews` (spec 007, Part 8). Kept, hidden, until Part 11 removes it.
+    defineField({
+      name: 'testimonials',
+      title: 'Testimonials (old)',
+      type: 'array',
+      hidden: true,
       of: [
         defineArrayMember({
           type: 'object',

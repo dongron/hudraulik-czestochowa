@@ -1,4 +1,4 @@
-import type {LandingPageQueryResult} from '@/sanity.types'
+import type {LandingPageQueryResult, SettingsQueryResult} from '@/sanity.types'
 
 type TestimonialsBlock = Extract<
   NonNullable<NonNullable<LandingPageQueryResult>['pageBuilder']>[number],
@@ -7,6 +7,26 @@ type TestimonialsBlock = Extract<
 
 type Props = {
   block: TestimonialsBlock
+  settings: SettingsQueryResult
+}
+
+type Card = {key: string; authorName: string; text: string; rating: number}
+
+// Selected Google reviews win; the old inline testimonials are a fallback until
+// the home page selects reviews (spec 007, Part 8). References to unpublished
+// or deleted reviews resolve to null and are skipped.
+function cardsFor(block: TestimonialsBlock): Card[] {
+  const reviews = (block.reviews ?? [])
+    .filter((r): r is NonNullable<typeof r> => Boolean(r))
+    .map((r) => ({key: r._id, authorName: r.authorName, text: r.text, rating: r.rating}))
+  if (reviews.length > 0) return reviews
+
+  return (block.testimonials ?? []).map((t) => ({
+    key: t._key,
+    authorName: t.authorName,
+    text: t.text,
+    rating: t.rating,
+  }))
 }
 
 function Stars({rating}: {rating: number}) {
@@ -29,7 +49,10 @@ function Stars({rating}: {rating: number}) {
   )
 }
 
-export default function LandingTestimonials({block}: Props) {
+export default function LandingTestimonials({block, settings}: Props) {
+  const cards = cardsFor(block)
+  const profileUrl = settings?.googleMapsUrl
+
   return (
     <section id="opinie" className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -44,9 +67,9 @@ export default function LandingTestimonials({block}: Props) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {block.testimonials.map((t) => (
+          {cards.map((t) => (
             <figure
-              key={t._key}
+              key={t.key}
               className="flex flex-col rounded-lg bg-white p-6 shadow-sm border border-gray-200"
             >
               <Stars rating={t.rating} />
@@ -59,6 +82,25 @@ export default function LandingTestimonials({block}: Props) {
             </figure>
           ))}
         </div>
+
+        {block.sourceNote && (
+          <p className="mt-8 text-center text-sm text-gray-600">
+            {block.sourceNote}
+            {profileUrl && block.sourceLinkLabel && (
+              <>
+                {' '}
+                <a
+                  href={profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-blue-600 hover:text-blue-700 underline"
+                >
+                  {block.sourceLinkLabel}
+                </a>
+              </>
+            )}
+          </p>
+        )}
       </div>
     </section>
   )

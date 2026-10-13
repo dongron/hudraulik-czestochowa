@@ -157,16 +157,16 @@ Depends on: none.
 
 Depends on: Part 7 published.
 
-- [ ] **T8.1** `studio/src/schemaTypes/objects/testimonialsSection.ts`: add `reviews` (array of references to `googleReview`), `sourceNote` and `sourceLinkLabel`; make the old `testimonials` optional and hidden; run `pnpm --filter frontend sanity:typegen` (M, includes generated files)
+- [x] **T8.1** `studio/src/schemaTypes/objects/testimonialsSection.ts`: add `reviews` (array of references to `googleReview`), `sourceNote` and `sourceLinkLabel`; make the old `testimonials` optional and hidden; run `pnpm --filter frontend sanity:typegen` (M, includes generated files)
   - **Done when:** studio type-check passes; local Studio shows the new fields on the home page and hides the old one.
-- [ ] **T8.2** Write failing `frontend/app/components/LandingTestimonials.test.tsx` (XS)
+- [x] **T8.2** Write failing `frontend/app/components/LandingTestimonials.test.tsx` (XS)
   - Cases: renders referenced reviews in order; skips references that resolve to null; falls back to old `testimonials` when `reviews` is empty; renders `sourceNote` with a link labelled `sourceLinkLabel` to `settings.googleMapsUrl`, `target="_blank"`, `rel="noopener noreferrer"`; no link when `googleMapsUrl` is missing.
   - **Done when:** the cases fail against the current component.
-- [ ] **T8.3** `frontend/sanity/lib/queries.ts` projects `"reviews": reviews[]->{_id, authorName, text, rating}`, `sourceNote`, `sourceLinkLabel`; `LandingTestimonials.tsx` renders them; `frontend/app/page.tsx` passes `settings`; regenerate types (M)
+- [x] **T8.3** `frontend/sanity/lib/queries.ts` projects `"reviews": reviews[]->{_id, authorName, text, rating}`, `sourceNote`, `sourceLinkLabel`; `LandingTestimonials.tsx` renders them; `frontend/app/page.tsx` passes `settings`; regenerate types (M)
   - **Done when:** T8.2 passes; http://localhost:3000/#opinie still shows the old testimonials (published content has no `reviews` yet).
-- [ ] **T8.4** Sanity draft on the home page testimonials section: `reviews` = Angelika, Filip, Agnieszka (in that order); `sourceNote` "Opinie klientów z naszej wizytówki Google."; `sourceLinkLabel` "Zobacz wszystkie opinie w Google"
+- [x] **T8.4** Sanity draft on the home page testimonials section: `reviews` = Angelika, Filip, Agnieszka (in that order); `sourceNote` "Opinie klientów z naszej wizytówki Google."; `sourceLinkLabel` "Zobacz wszystkie opinie w Google"
   - **Done when:** Studio → Presentation shows the three reviews and the note.
-- [ ] **T8.5** Gate
+- [x] **T8.5** Gate
 
 > **Checkpoint 8:** spec Part 8 "How to test" → approve → publish the draft → `pnpm deploy:studio` → commit `feat(reviews): show Google reviews on the homepage` → deploy frontend.
 
