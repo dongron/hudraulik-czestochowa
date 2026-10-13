@@ -134,20 +134,20 @@ Depends on: Part 5 (same component).
 
 Depends on: none.
 
-- [ ] **T7.1** Studio test setup and failing tests (S)
+- [x] **T7.1** Studio test setup and failing tests (S)
   - `studio/package.json`: add `vitest` (same version as the frontend) to devDependencies and `"test": "vitest run"`.
   - New `studio/src/lib/reviewerName.test.ts`: every row of the spec's name format table for `formatReviewerName`; `isShortReviewerName` accepts `Angelika K.` and `Filip`, rejects `Angelika Kowalska`, `Angelika K`, `angelika k.` and empty strings.
   - **Done when:** `pnpm --filter studio test` runs and fails because the module does not exist.
-- [ ] **T7.2** Implement `studio/src/lib/reviewerName.ts` (XS)
+- [x] **T7.2** Implement `studio/src/lib/reviewerName.ts` (XS)
   - **Done when:** T7.1 passes.
-- [ ] **T7.3** New `studio/src/schemaTypes/documents/googleReview.ts`, registered in `studio/src/schemaTypes/index.ts` (S)
+- [x] **T7.3** New `studio/src/schemaTypes/documents/googleReview.ts`, registered in `studio/src/schemaTypes/index.ts` (S)
   - Fields: `authorName` (required, validated with `isShortReviewerName`, message "Podaj tylko imię i pierwszą literę nazwiska, np. Angelika K."), `rating` (required, integer 1 to 5), `text` (required), `reviewDate` (date), `googleReviewId` (read-only, optional). Preview: name + stars.
   - **Done when:** `pnpm --filter studio type-check` passes; local Studio lists "Google Review" and blocks publishing "Angelika Kowalska".
-- [ ] **T7.4** Read the reviews from Angelika, Filip and Agnieszka on the Google Business Profile in the browser (text, stars, date)
+- [x] **T7.4** Read the reviews from Angelika, Filip and Agnieszka on the Google Business Profile in the browser (text, stars, date)
   - **Done when:** the three reviews are captured verbatim; if Google blocks reading, Dominik pastes them.
-- [ ] **T7.5** Sanity drafts: three `googleReview` documents with shortened names via the Sanity MCP
+- [x] **T7.5** Sanity drafts: three `googleReview` documents with shortened names via the Sanity MCP
   - **Done when:** the three drafts are visible in local Studio and match Google.
-- [ ] **T7.6** Gate
+- [x] **T7.6** Gate
 
 > **Checkpoint 7:** spec Part 7 "How to test" → approve → publish the three reviews → `pnpm deploy:studio` → commit `feat(reviews): add Google review documents`.
 

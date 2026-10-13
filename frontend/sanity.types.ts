@@ -183,6 +183,19 @@ export type Button = {
   link?: Link
 }
 
+export type GoogleReview = {
+  _id: string
+  _type: 'googleReview'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  authorName: string
+  rating: number
+  text: string
+  reviewDate?: string
+  googleReviewId?: string
+}
+
 export type Service = {
   _id: string
   _type: 'service'
@@ -627,6 +640,7 @@ export type AllSanitySchemaTypes =
   | BlockContentTextOnly
   | BlockContent
   | Button
+  | GoogleReview
   | Service
   | SanityImageCrop
   | SanityImageHotspot

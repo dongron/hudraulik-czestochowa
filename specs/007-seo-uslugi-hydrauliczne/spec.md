@@ -17,6 +17,7 @@ Status: Spec reviewed 2026-10-13, all open questions resolved. Plan and tasks aw
 | D9 | The Google Business Profile has been verified for 60+ days, so it qualifies for Business Profile API access. |
 | D10 | Google's average rating and review count are **not** shown. |
 | D11 | The FAQ section and other homepage content expansion move to the **next phase** (separate spec). |
+| D12 | Obvious spelling mistakes in review text may be corrected (e.g. "dokladnie" → "dokładnie", "kultularny" → "kulturalny"). Wording and meaning never change. All three reviews are 5 stars; no dates are stored. |
 
 ## Assumptions
 
@@ -24,7 +25,7 @@ Status: Spec reviewed 2026-10-13, all open questions resolved. Plan and tasks aw
 2. The homepage `/` is rendered from the Sanity `page` document with slug `home` (`landingPageQuery`). That document stays published; only its duplicate URL `/home` goes away.
 3. The only post, "Why Sanity Wins Over Traditional CMSes", is a leftover from the Sanity starter template.
 4. Reviews by Angelika, Filip and Agnieszka exist on the business's Google Business Profile (`settings.googleMapsUrl`).
-5. Review text and star rating are shown exactly as on Google. Only the name is shortened.
+5. Review text and star rating are shown as on Google. Only the name is shortened and obvious spelling mistakes are corrected (D12).
 6. There is one Sanity dataset (`production`), so published content changes are live immediately.
 7. Deployment stays on Cloudflare via OpenNext. Dominik deploys (or asks Claude to) after approving a part.
 
@@ -422,7 +423,7 @@ for (const p of allPostsAndPages.data) {
 - Always: Sanity content changes go in as drafts and are published only after the part is approved.
 - Always: keep `/` rendering the Sanity `home` page document; show review text and rating exactly as on Google; link visitors to all reviews on Google.
 - Ask first: deleting any content (Part 11), running the import against production without `--dry-run`, deploying the frontend, adding dependencies beyond those named in a part, changing `wrangler.jsonc`.
-- Never: store or show a full surname, reviewer photo or reviewer profile URL; edit review text; publish invented or paid-for reviews; add `Review`/`AggregateRating` JSON-LD for these reviews.
+- Never: store or show a full surname, reviewer photo or reviewer profile URL; change the wording or meaning of a review (spelling fixes only, D12); publish invented or paid-for reviews; add `Review`/`AggregateRating` JSON-LD for these reviews.
 - Never: commit OAuth credentials, refresh tokens or Sanity tokens.
 - Never: delete files, unpublish the `home` page document or change the homepage `<title>`.
 
