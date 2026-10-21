@@ -70,7 +70,10 @@ export default async function RootLayout({children}: {children: React.ReactNode}
       <body>
         <section className="min-h-screen">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
-          <Toaster />
+          {/* data-nosnippet keeps toast text out of Google search snippets */}
+          <div data-nosnippet>
+            <Toaster />
+          </div>
           {isDraftMode && (
             <>
               <DraftModeToast />
@@ -79,7 +82,8 @@ export default async function RootLayout({children}: {children: React.ReactNode}
             </>
           )}
           {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
-          <SanityLive onError={handleError} />
+          {/* Error toasts are for editors only. Outside Draft Mode next-sanity's default handler just logs to the console, so crawlers never index the error text. */}
+          <SanityLive onError={isDraftMode ? handleError : undefined} />
           <SiteHeader settings={settings} />
           <main className="">{children}</main>
           <SiteFooter settings={settings} />
