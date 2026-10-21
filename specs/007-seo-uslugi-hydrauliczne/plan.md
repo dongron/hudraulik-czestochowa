@@ -69,8 +69,8 @@ Part 7  reviewerName + googleReview type + 3 review docs
 | | 6 | "Hydraulik Częstochowa" as H1, keyword in intro | S | intro text (draft) | Part 5 |
 | Reviews | 7 | Google review documents | M | 3 review drafts, Studio deploy | none |
 | | 8 | Homepage shows the reviews | M | testimonials selection (draft), Studio deploy | Part 7 published |
-| Import | 9 | Import dry run | M | none | Part 7, O5 |
-| | 10 | Import writes | S | first import run | Part 9 |
+| Import | 9 | Import dry run (SKIPPED, D13) | M | none | n/a |
+| | 10 | Import writes (SKIPPED, D13) | S | n/a | n/a |
 | Cleanup | 11 | Remove old testimonials field (optional) | S | unset old data (explicit OK) | Part 8 stable on production |
 
 **Checkpoint after every part:** Claude reports gate results; Dominik reviews the diff and drafts and runs the part's "How to test" from the spec; on approval Claude publishes drafts and commits; Dominik deploys.

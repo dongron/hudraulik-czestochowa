@@ -17,6 +17,7 @@ Status: Spec reviewed 2026-10-13, all open questions resolved. Plan and tasks aw
 | D9 | The Google Business Profile has been verified for 60+ days, so it qualifies for Business Profile API access. |
 | D10 | Google's average rating and review count are **not** shown. |
 | D11 | The FAQ section and other homepage content expansion move to the **next phase** (separate spec). |
+| D13 | **Automatic review import (Parts 9 and 10) is skipped**, and so is the Business Profile API application (O5). Reviews are added by hand in Studio. |
 | D12 | Obvious spelling mistakes in review text may be corrected (e.g. "dokladnie" → "dokładnie", "kultularny" → "kulturalny"). Wording and meaning never change. All three reviews are 5 stars; no dates are stored. |
 
 ## Assumptions
@@ -254,7 +255,7 @@ How to test:
 
 ---
 
-### Part 9: Review import, dry run (blocked until O5 is done)
+### Part 9: Review import, dry run (SKIPPED, D13)
 
 Goal: a script reads all reviews from the Google Business Profile API and shows what it would write. It cannot write anything yet.
 
@@ -275,7 +276,7 @@ How to test:
 
 ---
 
-### Part 10: Review import, writing to Sanity (blocked until O5 is done)
+### Part 10: Review import, writing to Sanity (SKIPPED, D13)
 
 Goal: one command pulls the latest Google reviews into Sanity. It never changes which reviews the homepage shows and never deletes anything.
 
@@ -314,7 +315,7 @@ How to test: the homepage still shows the three Google reviews; Studio no longer
 | O2 | Google Search Console: submit `/sitemap.xml`, request indexing of `/` and the service pages | After Part 1 is deployed (again after Part 4) |
 | O3 | Directory listings with identical name, address and phone: Oferteo, Panorama Firm, pkt.pl, Fixly | Any time |
 | O4 | Ask every customer for a Google review | Ongoing |
-| O5 | Apply for Business Profile API basic access (form option "Application for Basic API Access", from an owner/manager email); create an OAuth client and a refresh token with scope `business.manage` | Before Part 9 |
+| O5 | Apply for Business Profile API basic access (form option "Application for Basic API Access", from an owner/manager email); create an OAuth client and a refresh token with scope `business.manage` | Skipped (D13) |
 
 ## Review Source Options
 

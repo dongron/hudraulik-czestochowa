@@ -172,7 +172,7 @@ Depends on: Part 7 published.
 
 ---
 
-## Part 9: Review import, dry run
+## Part 9: Review import, dry run (SKIPPED, spec D13)
 
 Depends on: Part 7. **Blocked until O5** (API access approved, OAuth refresh token created).
 
@@ -191,7 +191,7 @@ Depends on: Part 7. **Blocked until O5** (API access approved, OAuth refresh tok
 
 ---
 
-## Part 10: Review import, writing to Sanity
+## Part 10: Review import, writing to Sanity (SKIPPED, spec D13)
 
 Depends on: Part 9.
 
@@ -228,4 +228,4 @@ Depends on: Part 8 running cleanly on production.
 - [ ] **O2** Search Console: submit `https://hydraulik-czestochowa-24.pl/sitemap.xml`, request indexing of `/` and service pages (after Checkpoint 1, again after Checkpoint 4)
 - [ ] **O3** Directory listings with identical name, address and phone: Oferteo, Panorama Firm, pkt.pl, Fixly (any time)
 - [ ] **O4** Ask every customer for a Google review (ongoing)
-- [ ] **O5** Business Profile API: apply for basic access; when approved, create an OAuth client and refresh token with scope `business.manage` (before Part 9)
+- [ ] ~~**O5** Business Profile API~~ (skipped, spec D13): apply for basic access; when approved, create an OAuth client and refresh token with scope `business.manage` (before Part 9)
